@@ -1,11 +1,18 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/index.html.twig' %}
 
 {% block title %}New Category{% endblock %}
-
-{% block body %}
-    <h1>Create new Category</h1>
-
+{% block content_header %}
+    {% embed 'admin/component/_content_header _Page_header.html.twig' %}
+        {% block sub_title %} Create New Category{% endblock %}
+    {% endembed %}
+{% endblock %}
+{% block content %}
     {{ include('admin/category/_form.html.twig') }}
-
-    <a href="{{ path('app_category_index') }}">back to list</a>
+    <div class="text-center my-2">
+        <a class="btn btn-primary btn-sm" href="{{ path('app_category_index') }}">
+            <i class="fas fa-arrow-left mr-1">
+            </i>
+            Back To List
+        </a>
+    </div>
 {% endblock %}

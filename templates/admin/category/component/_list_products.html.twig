@@ -1,0 +1,106 @@
+<section class="content shadow-lg">
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Products</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped projects">
+                <thead>
+                <tr>
+                    <th style="width: 1%">
+                        #
+                    </th>
+                    <th style="width: 20%">
+                        Product Name
+                    </th>
+                    <th style="width: 30%">
+                        Product Photos
+                    </th>
+                    <th>
+                        Product Description
+                    </th>
+                    <th style="width: 8%" class="text-center">
+                        Price
+                    </th>
+                    <th style="width: 20%">
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for product in category.products %}
+                    <tr>
+                        <td>
+                            #
+                        </td>
+                        <td>
+                            <a>
+                                {{ product.name }}
+                            </a>
+                            {#<br/>
+                            <small>
+                                Created 01.01.2019
+                            </small>#}
+                        </td>
+                        <td>
+                            <ul class="list-inline">
+                                {% for photo in product.photos %}
+                                    <li class="list-inline-item">
+                                        <img alt="Avatar" class="table-avatar" src="{{ asset('uploads'~photo.photo) }}">
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>
+                            {{ product.description }}
+                        </td>
+                        <td class="project-state">
+                            <span class="badge badge-success">{{ product.mainPrice }}</span>
+                        </td>
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <a class="nav-link" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-chevron-circle-down"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                    <div class="dropdown-divider"></div>
+                                    <a href="{{ path('app_product_show', {'slug': product.slug}) }}" class="dropdown-item bg-primary">
+                                        <i class="fas fa-folder">
+                                        </i>
+                                        View
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="{{ path('app_product_edit', {'slug': product.slug}) }}" class="dropdown-item bg-info">
+                                        <i class="fas fa-pencil-alt">
+                                        </i>
+                                        Edit
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    {{ include('admin/product/_delete_form.html.twig') }}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">no records found</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</section>
