@@ -37,7 +37,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for product in category.products %}
+                {% for product in products %}
                     <tr>
                         <td>
                             #
@@ -53,18 +53,14 @@
                         </td>
                         <td>
                             <ul class="list-inline">
-                                {% for photo in product.photos %}
-                                    <li class="list-inline-item">
-                                        <img alt="Avatar" class="table-avatar" src="{{ asset('uploads'~photo.photo) }}">
-                                    </li>
-                                {% endfor %}
+                                <img alt="Avatar" class="table-avatar" src="{{ asset('uploads'~product.photo) }}">
                             </ul>
                         </td>
                         <td>
                             {{ product.description }}
                         </td>
                         <td class="project-state">
-                            <span class="badge badge-success">{{ product.mainPrice }}</span>
+                            <span class="badge badge-success">{{ product.price }}</span>
                         </td>
                         <td class="text-center">
                             <div class="dropdown">
@@ -98,6 +94,9 @@
 
                 </tbody>
             </table>
+        </div>
+        <div class="card-footer">
+            {{ knp_pagination_render(products) }}
         </div>
         <!-- /.card-body -->
     </div>

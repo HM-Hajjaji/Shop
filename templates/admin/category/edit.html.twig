@@ -8,21 +8,18 @@
     {% endembed %}
 {% endblock %}
 {% block content %}
-    {% embed 'admin/category/_form.html.twig'%}
-        {% block card_footer %}
-            <div class="project-actions">
-                <a class="btn btn-info btn" href="{{path('app_category_show', {'slug': category.slug}) }}">
+    {{ include('admin/category/_form.html.twig') }}
+    <div class="card pl-2 d-flex justify-content-start shadow-lg py-2">
+        {% embed 'admin/category/component/_actions.html.twig'%}
+            {% block block_action %}
+                <a class="btn btn-primary btn" href="{{path('app_category_show', {'slug': category.slug}) }}">
                     <i class="fas fa-folder">
                     </i>
                     Show
                 </a>
-                <a class="btn btn-danger btn-sm" href="#">
-                    {{ include('admin/category/_delete_form.html.twig') }}
-                </a>
-            </div>
-        {% endblock %}
-    {% endembed %}
-
+            {% endblock %}
+        {% endembed %}
+    </div>
     <div class="text-center my-2">
         <a class="btn btn-primary btn-sm" href="{{ path('app_category_index') }}">
             <i class="fas fa-arrow-left mr-1">

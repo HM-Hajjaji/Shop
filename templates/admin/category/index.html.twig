@@ -34,8 +34,8 @@
         {% for category in categories %}
             <tr>
                 <td>#</td>
-                <td>{{ category.name }}</td>
-                <td>{{ category.description }}</td>
+                <td>{{ category.name|title }}</td>
+                <td>{{ category.description|title }}</td>
                 <td class="text-center">
                     <div class="dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -69,7 +69,7 @@
     </table>
     </div>
     <div class="card-footer">
-
+        {{ knp_pagination_render(categories) }}
     </div>
 </div>
 {% endblock %}

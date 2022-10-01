@@ -54,10 +54,13 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/{slug}/show', name: 'app_category_show', methods: ['GET'])]
-    public function show(Category $category): Response
+    public function show(Category $category,Request $request): Response
     {
+        $products = $category->getProducts();
+        $products = $this->paginator->paginate($products,$request->query->getInt('page',1),2);
         return $this->render('admin/category/show.html.twig', [
             'category' => $category,
+            'products' => $products
         ]);
     }
 
@@ -66,14 +69,17 @@ class CategoryController extends AbstractController
     {
         $form = $this->createForm(CategoryType::class, $category,['btn_name' => 'Save']);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $categoryRepository->save($category, true);
-            return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_category_index');
         }
-
-        return $this->renderForm('admin/category/edit.html.twig', [
+        $products = $category->getProducts();
+        $products = $this->paginator->paginate($products,$request->query->getInt('page',1),2);
+        return $this->renderForm('admin/category/edit.html.twig',[
             'category' => $category,
             'form' => $form,
+            'products' => $products
         ]);
     }
 
