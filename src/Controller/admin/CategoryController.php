@@ -34,6 +34,14 @@ class CategoryController extends AbstractController
         ]);
     }
 
+/*    #[Route('/product-new/{slug}', name: 'app_category_index', methods: ['GET'])]
+    public function new_product(Request $request,Category $category): Response
+    {
+        return $this->render('admin/category/index.html.twig', [
+
+        ]);
+    }*/
+
     #[Route('/new', name: 'app_category_new', methods: ['GET', 'POST'])]
     public function new(SluggerInterface $slugger,Request $request): Response
     {

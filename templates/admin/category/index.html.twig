@@ -2,7 +2,7 @@
 
 {% block title %}List Category{% endblock %}
 {% block content_header %}
-    {% embed 'admin/component/_content_header _page.html.twig' %}
+    {% embed 'admin/component/_content_header_page.html.twig' %}
         {% block sub_title %}Categories{% endblock %}
         {% block action %}<a href="{{ path('app_category_new') }}" class="btn btn-sm btn-outline-success">Create new</a>{% endblock %}
     {% endembed %}
@@ -11,14 +11,6 @@
 <div class="card shadow-lg">
     <div class="card-header">
         <h3 class="card-title">All Categories</h3>
-        {#<div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                <i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>#}
     </div>
     <div class="card-body p-0">
         <table class="table table-striped projects">
@@ -55,7 +47,7 @@
                                 Edit
                             </a>
                             <div class="dropdown-divider"></div>
-                            {{ include('admin/category/_delete_form.html.twig') }}
+                            {{ include('admin/category/_delete_form.html.twig',{'slug':category.slug}) }}
                         </div>
                     </div>
                 </td>

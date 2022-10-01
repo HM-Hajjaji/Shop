@@ -47,6 +47,9 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Photo::class, orphanRemoval: true)]
     private Collection $photos;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $date = null;
+
     public function __construct()
     {
         $this->listOrders = new ArrayCollection();
@@ -210,6 +213,18 @@ class Product
                 $photo->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(?\DateTimeInterface $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }

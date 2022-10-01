@@ -1,11 +1,19 @@
-{% extends '../../base.html.twig' %}
+{% extends 'admin/index.html.twig' %}
 
 {% block title %}New Product{% endblock %}
+{% block content_header %}
+    {% embed 'admin/component/_content_header_page.html.twig' %}
+        {% block sub_title %} Create New Product{% endblock %}
+    {% endembed %}
+{% endblock %}
+{% block content %}
+    {{ include('admin/product/_form.html.twig') }}
 
-{% block body %}
-    <h1>Create new Product</h1>
-
-    {{ include('product/_form.html.twig') }}
-
-    <a href="{{ path('app_product_index') }}">back to list</a>
+    <div class="text-center my-2">
+        <a class="btn btn-primary btn-sm" href="{{ path('app_product_index') }}">
+            <i class="fas fa-arrow-left mr-1">
+            </i>
+            Back To List
+        </a>
+    </div>
 {% endblock %}

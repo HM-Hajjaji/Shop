@@ -8,9 +8,9 @@
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
                 </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                    <i class="fas fa-times"></i>
-                </button>
+                {#<button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                        <i class="fas fa-times"></i>
+                    </button>#}
             </div>
         </div>
         <div class="card-body p-0">
@@ -20,19 +20,25 @@
                     <th style="width: 1%">
                         #
                     </th>
-                    <th style="width: 20%">
+                    <th style="width: 19%">
                         Product Name
                     </th>
-                    <th style="width: 30%">
-                        Product Photos
+                    <th style="width: 20%">
+                        Product Photo
                     </th>
-                    <th>
+                    <th style="width: 30%">
                         Product Description
                     </th>
-                    <th style="width: 8%" class="text-center">
+                    <th style="width: 5%" class="text-center">
                         Price
                     </th>
-                    <th style="width: 20%">
+                    <th style="width: 10%" class="text-center">
+                        Category
+                    </th>
+                    <th style="width: 5%" class="text-center">
+                        Quantity
+                    </th>
+                    <th style="width: 10%">
                     </th>
                 </tr>
                 </thead>
@@ -43,24 +49,22 @@
                             #
                         </td>
                         <td>
-                            <a>
-                                {{ product.name }}
-                            </a>
-                            {#<br/>
-                            <small>
-                                Created 01.01.2019
-                            </small>#}
+                            {{ product.name|title }}
                         </td>
                         <td>
-                            <ul class="list-inline">
-                                <img alt="Avatar" class="table-avatar" src="{{ asset('uploads'~product.photo) }}">
-                            </ul>
+                            <img alt="{{ product.name }}" class="table-avatar w-50" src="{{ asset('uploads'~product.photo) }}">
                         </td>
                         <td>
-                            {{ product.description }}
+                            {{ product.description|title }}
                         </td>
                         <td class="project-state">
-                            <span class="badge badge-success">{{ product.price }}</span>
+                            <span class="badge badge-warning">{{ product.price }} DH</span>
+                        </td>
+                        <td class="project-state">
+                            <span class="badge badge-success">{{ product.category.name|title }}</span>
+                        </td>
+                        <td class="project-state">
+                            <span class="badge badge-danger">{{ product.quantity }}</span>
                         </td>
                         <td class="text-center">
                             <div class="dropdown">
@@ -81,14 +85,14 @@
                                         Edit
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    {{ include('admin/product/_delete_form.html.twig') }}
+                                    {{ include('admin/product/_delete_form.html.twig',{'slug':product.slug}) }}
                                 </div>
                             </div>
                         </td>
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="6">no records found</td>
+                        <td colspan="8">no records found</td>
                     </tr>
                 {% endfor %}
 

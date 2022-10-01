@@ -7,9 +7,9 @@
            </a>
         {% endblock %}
         <a class="btn btn-danger btn-sm" href="#">
-            {{ include('admin/category/_delete_form.html.twig') }}
+            {{ include('admin/category/_delete_form.html.twig',{'slug' : category.slug}) }}
         </a>
-        <a class="btn btn-secondary btn" href="#">
+        <a class="btn btn-secondary btn" href="{{ path('app_product_new') }}">
             <i class="fas fa-plus"></i>
             Add Product
         </a>

@@ -1,4 +1,89 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form)}}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12" >
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Product</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        {{ form_row(form.name,{'attr': {'class': 'form-control','placeholder' : 'Enter Product Name'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.description,{'attr': {'class': 'form-control','placeholder' : 'Enter Product Description'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.price,{'attr': {'class': 'form-control','placeholder' : 'Enter Price'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.discount,{'attr': {'class': 'form-control','placeholder' : 'Enter Discount'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.quantity,{'attr': {'class': 'form-control','placeholder' : 'Enter Quantity'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.photo,{'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group ">
+                        {{ form_row(form.category,{'attr': {'class': 'form-control'}}) }}
+                    </div>
+                  {# <div id="photos"  data-index="{{ form.photos|length > 0 ? form.photos|last.vars.name + 1 : 0 }}"  data-prototype="{{ form_widget(form.photos.vars.prototype)|e('html_attr') }}">
+                       {% for photo in form.photos %}
+                           {{ form_row(photo.photo,{'attr': {'class': 'form-control'}}) }}
+                           {{ form_row(photo.status,{'attr': {'class': ''}}) }}
+                       {% endfor %}
+                   </div>#}
+                </div>
+                <div class="card-footer">
+                    <div class="form-group">
+                        {{ form_row(form.submit,{'attr': {'class': 'btn btn-success mr-1'}}) }}
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+</section>
 {{ form_end(form) }}
+{#
+<script defer>
+    const addFormToCollection = (e) => {
+        const collectionHolder = document.querySelector('#' + e.currentTarget.dataset.collectionHolderClass);
+
+        console.log(collectionHolder);
+        const item = document.createElement('div');
+
+        item.innerHTML = collectionHolder
+            .dataset
+            .prototype
+            .replace(
+                /__name__/g,
+                collectionHolder.dataset.index
+            );
+
+        collectionHolder.appendChild(item);
+
+        collectionHolder.dataset.index++;
+    };
+    //details
+    document.querySelector('#btn_add_details').addEventListener("click", addFormToCollection);
+    const removeFormToCollection = (e)=>{
+        const formItem = document.querySelector('#' + e.currentTarget.dataset.delete);
+        formItem.remove();
+    }
+    document.querySelectorAll('.button_remove').forEach(item=>{
+        item.addEventListener("click", removeFormToCollection);
+    })
+
+    //photos
+    document.querySelector('#btn_add_photos').addEventListener("click", addFormToCollection);
+</script>#}
