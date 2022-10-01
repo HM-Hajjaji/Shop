@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Log In{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+        <div class="login-box">
+            <!-- /.login-logo -->
+            <div class="card card-outline card-primary">
+                <div class="card-header text-center">
+                    <a href="{{ path('app_home') }}" class="h1"><b>Admin</b>LTE</a>
+                </div>
+                <div class="card-body">
+                    <p class="login-box-msg">Sign in to start your session</p>
+                    {% if error %}
+                        <div class="alert alert-danger my-2">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                    <form method="post">
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('authenticate') }}">
+
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Email" name="email" value="{{ last_username }}" autofocus>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-envelope"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group mb-2">
+                            <input type="password" class="form-control" placeholder="Password" name="password">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 social-auth-links text-center mt-2 mb-1">
+                                <button type="submit" class="btn btn-block btn-primary">
+                                    Sign in
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    {#                <p class="mb-1">
+                    <a href="forgot-password.html">I forgot my password</a>
+                </p>#}
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer text-center">
+                    <a href="{{ path('app_register') }}" class="text-center mb-1 link-primary text-decoration-none">Register a new membership</a>
+                </div>
+            </div>
+            <!-- /.card -->
+        </div>
+</div>
+</body>
+</html>

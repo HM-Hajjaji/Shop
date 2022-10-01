@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Register{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body class="hold-transition register-page">
+<div class="register-box">
+    <div class="register-box">
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a href="{{ path('app_home') }}" class="h1"><b>Admin</b>LTE</a>
+            </div>
+            <div class="card-body">
+                <p class="login-box-msg">Sign Up a new account</p>
+                {{ form_start(registrationForm, {'action': path('app_register'), 'method': 'Post'}) }}
+
+                <div class="input-group justify-content-center mb-2">
+                    {{ form_row(registrationForm.name,{'attr': {'class': 'form-control ','placeholder' : 'Full name'}}) }}
+                    <div class="input-group-append mb-3">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group justify-content-center mb-2">
+                    {{ form_row(registrationForm.email,{'attr': {'class': 'form-control','placeholder' : 'Email'}}) }}
+                    <div class="input-group-append mb-3">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group justify-content-center mb-2">
+                    {{ form_row(registrationForm.password.first,{'attr': {'class': 'form-control','placeholder' : 'Password'}}) }}
+                    <div class="input-group-append mb-3">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group justify-content-center mb-2">
+                    {{ form_row(registrationForm.password.second,{'attr': {'class': 'form-control','placeholder' : 'Retype password'}}) }}
+                    <div class="input-group-append mb-3">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 my-2">
+                        {{ form_row(registrationForm.submit,{'attr':{'class': 'btn btn-block btn-primary'}}) }}
+                    </div>
+                </div>
+                {{ form_end(registrationForm) }}
+            </div>
+            <div class="card-footer text-center">
+                <a href="{{ path('app_login') }}" class="text-center mb-1 link-primary text-decoration-none">I already have a account</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
