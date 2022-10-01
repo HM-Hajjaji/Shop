@@ -1,0 +1,42 @@
+{% extends '../../base.html.twig' %}
+
+{% block title %}Order{% endblock %}
+
+{% block body %}
+    <h1>Order</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ order.id }}</td>
+            </tr>
+            <tr>
+                <th>Delivery</th>
+                <td>{{ order.delivery }}</td>
+            </tr>
+            <tr>
+                <th>Total</th>
+                <td>{{ order.total }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ order.date ? order.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ order.slug }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ order.status }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_order_index') }}">back to list</a>
+
+    <a href="{{ path('app_order_edit', {'id': order.id}) }}">edit</a>
+
+    {{ include('order/_delete_form.html.twig') }}
+{% endblock %}

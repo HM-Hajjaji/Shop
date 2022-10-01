@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category index{% endblock %}
+
+{% block body %}
+    <h1>Category index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>{{ category.id }}</td>
+                <td>{{ category.name }}</td>
+                <td>{{ category.description }}</td>
+                <td>{{ category.date ? category.date|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_category_show', {'slug': category.slug}) }}">show</a>
+                    <a href="{{ path('app_category_edit', {'slug': category.slug}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<div>
+    {{ knp_pagination_render(categories) }}
+</div>
+    <a href="{{ path('app_category_new') }}">Create new</a>
+{% endblock %}
