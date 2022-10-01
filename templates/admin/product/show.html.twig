@@ -71,7 +71,7 @@
                         <h5><span class="ml-2 badge badge-danger">{{ product.quantity }}</span></h5>
 
                         <h4 class="mt-3">Discount</h4>
-                        <h5><span class="ml-2 badge badge-success">{{ product.discount ? product.discount : 0 }} %</span></h5>
+                        <h5><span class="ml-2 badge badge-success">{{ product.discount ? product.discount :  0 }} %</span></h5>
 
                         <h4 class="mt-3">How many times then sell it</h4>
                         <h5><span class="ml-2 badge badge-primary">{{ product.listOrders|length }}</span></h5>
@@ -107,7 +107,13 @@
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
-
     </section>
     <!-- /.content -->
+    <div class="text-center my-2">
+        <a class="btn btn-primary btn-sm" href="{{ path('app_product_index') }}">
+            <i class="fas fa-arrow-left mr-1">
+            </i>
+            Back To List
+        </a>
+    </div>
 {% endblock %}

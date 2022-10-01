@@ -92,7 +92,6 @@ class Detail
     public function setEntityProduct(?Product $entityProduct): self
     {
         $this->entityProduct = $entityProduct;
-
         return $this;
     }
 }

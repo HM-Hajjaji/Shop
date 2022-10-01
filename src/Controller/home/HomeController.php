@@ -17,7 +17,7 @@ class HomeController extends AbstractController
     {
         $categories =$categoryRepository->findAll();
         $products =$productRepository->findAll();
-        $products = $paginator->paginate($products,$request->query->getInt('page',1),10);
+        $products = $paginator->paginate($products,$request->query->getInt('page',1),5);
         return $this->render('home/index.html.twig',[
             'categorise' => $categories,
             'products' =>$products

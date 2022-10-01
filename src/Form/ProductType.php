@@ -9,7 +9,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,7 +25,7 @@ class ProductType extends AbstractType
             ->add('name',TextType::class)
             ->add('description',TextareaType::class)
             ->add('price',MoneyType::class)
-            ->add('discount',PercentType::class,['required' => false])
+            ->add('discount',IntegerType::class,['required' => false,  'attr' => ['min' => 0,'max' => 100]])
             ->add('quantity',IntegerType::class,[
                 'attr' => ['min' => 0]
             ])

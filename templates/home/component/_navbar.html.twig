@@ -11,11 +11,6 @@
         <div class="collapse navbar-collapse order-3" id="navbarCollapse">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
-                {% if app.session.has('cart') %}
-                    <li class="nav-item">
-                        <a href="{{ path('app_user_product_cart') }}" class="nav-link">Cart</a>
-                    </li>
-                {% endif %}
                 <li class="nav-item">
                     <a href="#" class="nav-link">Contact</a>
                 </li>
@@ -72,6 +67,14 @@
             <!-- Messages Dropdown Menu -->
             {% if app.user %}
                 {{ include('component/_dropdown_link_user.html.twig') }}
+                {% if app.session.has('cart') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_user_product_cart') }}" role="button" data-toggle="tooltip" data-placement="top" title="My Cart">
+                            <i class="fas fa-cart-plus"></i>
+                            <span class="badge badge-success navbar-badge">{{ app.session.get('cart')|length }}</span>
+                        </a>
+                    </li>
+                {% endif %}
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_login') }}" role="button" data-toggle="tooltip" data-placement="top" title="Log In">

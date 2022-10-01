@@ -1,0 +1,81 @@
+{% extends 'home/index.html.twig' %}
+
+{% block title %}Product Detail{% endblock %}
+ {% block sub_title %}Show Product{% endblock %}
+{% block content %}
+    <!-- Main content -->
+    <section class="content shadow-lg">
+        <!-- Default box -->
+        <div class="card card-solid">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-sm-6">
+                        <h3 class="d-inline-block d-sm-none">{{ product.name|title }}</h3>
+                        <div class="col-12">
+                            <img alt="{{ product.name }}" class="product-image" src="{{ asset('uploads'~product.photo) }}">
+                        </div>
+                        {#<div class="col-12 product-image-thumbs">
+                            <div class="product-image-thumb active"><img src="../../dist/img/prod-1.jpg" alt="Product Image"></div>
+                            <div class="product-image-thumb" ><img src="../../dist/img/prod-2.jpg" alt="Product Image"></div>
+                            <div class="product-image-thumb" ><img src="../../dist/img/prod-3.jpg" alt="Product Image"></div>
+                            <div class="product-image-thumb" ><img src="../../dist/img/prod-4.jpg" alt="Product Image"></div>
+                            <div class="product-image-thumb" ><img src="../../dist/img/prod-5.jpg" alt="Product Image"></div>
+                        </div>#}
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <h3 class="my-3">{{ product.name|title }} </h3>
+                        <p>{{ product.description|title }}</p>
+                        <form action="{{ path('app_user_product_cart_add',{'slug': product.slug})}}" method="post">
+                            <div >
+                                <label for="quantity">Quantity</label>
+                                <input type="number" name="quantity" id="quantity" class="form-control" required autofocus placeholder="Enter Quantity" min="1" max="{{ product.quantity }}">
+                            </div>
+                            <div class="bg-gray py-2 px-3 mt-4">
+                                {% if product.discount %}
+                                    <h4> <del>{{ product.price }} DH</del></h4>
+                                    <h2 class="mb-0">
+                                        {% set mainPrice = product.price - ((product.price * product.discount)/100) %}
+                                        ${{ mainPrice }} DH
+                                    </h2>
+                                {% else %}
+                                    <h2 class="mb-0">
+                                        {{ product.price }}
+                                    </h2>
+                                {% endif %}
+                            </div>
+                            <div class="my-2">
+                                <button type="submit" class="btn btn-sm bg-teal"><i class="fas fa-cart-plus"></i> Add To Cart</button>
+                            </div>
+                        </form>
+                        {# <div class="mt-4 product-share">
+                            <a href="#" class="text-gray">
+                                <i class="fab fa-facebook-square fa-2x"></i>
+                            </a>
+                            <a href="#" class="text-gray">
+                                <i class="fab fa-twitter-square fa-2x"></i>
+                            </a>
+                            <a href="#" class="text-gray">
+                                <i class="fas fa-envelope-square fa-2x"></i>
+                            </a>
+                            <a href="#" class="text-gray">
+                                <i class="fas fa-rss-square fa-2x"></i>
+                            </a>
+                        </div>#}
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </section>
+    <!-- /.content -->
+    <div class="text-center my-2">
+        <a class="btn btn-primary btn-sm" href="{{ path('app_home') }}">
+            <i class="fas fa-arrow-left mr-1">
+            </i>
+            Back To List
+        </a>
+    </div>
+    <!-- /.content -->
+{% endblock %}
