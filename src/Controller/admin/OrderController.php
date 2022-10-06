@@ -5,50 +5,43 @@ namespace App\Controller\admin;
 use App\Entity\Order;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('admin/order')]
+#[Route('/admin')]
 class OrderController extends AbstractController
 {
-    #[Route('/', name: 'app_order_index', methods: ['GET'])]
-    public function index(OrderRepository $orderRepository): Response
+
+    private $repository;
+    private $paginator;
+    public function __construct(OrderRepository $orderRepository,PaginatorInterface $paginator)
     {
-        return $this->render('order/index.html.twig', [
-            'orders' => $orderRepository->findAll(),
+        $this->repository = $orderRepository;
+        $this->paginator = $paginator;
+    }
+
+    #[Route('/order', name: 'app_order_index', methods: ['GET'])]
+    public function index(Request $request): Response
+    {
+        $orders = $this->repository->findBy([],['date' => 'DESC']);
+        $orders = $this->paginator->paginate($orders,$request->query->getInt('page',1),5);
+        return $this->render('admin/order/index.html.twig', [
+            'orders' =>$orders,
         ]);
     }
 
-    #[Route('/new', name: 'app_order_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, OrderRepository $orderRepository): Response
-    {
-        $order = new Order();
-        $form = $this->createForm(OrderType::class, $order);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $orderRepository->save($order, true);
-
-            return $this->redirectToRoute('app_order_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('order/new.html.twig', [
-            'order' => $order,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_order_show', methods: ['GET'])]
+    #[Route('/{slug}/show', name: 'app_order_show', methods: ['GET'])]
     public function show(Order $order): Response
     {
-        return $this->render('order/show.html.twig', [
+        return $this->render('admin/order/show.html.twig', [
             'order' => $order,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_order_edit', methods: ['GET', 'POST'])]
+    /*#[Route('/{id}/edit', name: 'app_order_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Order $order, OrderRepository $orderRepository): Response
     {
         $form = $this->createForm(OrderType::class, $order);
@@ -64,9 +57,9 @@ class OrderController extends AbstractController
             'order' => $order,
             'form' => $form,
         ]);
-    }
+    }*/
 
-    #[Route('/{id}', name: 'app_order_delete', methods: ['POST'])]
+    #[Route('/{slug}', name: 'app_order_delete', methods: ['POST'])]
     public function delete(Request $request, Order $order, OrderRepository $orderRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$order->getId(), $request->request->get('_token'))) {

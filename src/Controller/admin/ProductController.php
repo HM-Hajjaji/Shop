@@ -32,7 +32,7 @@ class ProductController extends AbstractController
     {
         $products = $this->repository->findAll();
         $products = $this->paginator->paginate($products,$request->query->getInt('page',1),5);
-        return $this->render('admin/product/index.html.twig', [
+        return $this->render('admin/product/show.html.twig', [
             'products' => $products,
         ]);
     }

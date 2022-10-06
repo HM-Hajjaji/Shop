@@ -29,7 +29,7 @@ class CategoryController extends AbstractController
     {
         $categories = $this->repository->findAll();
         $categories = $this->paginator->paginate($categories,$request->query->getInt('page',1),5);
-        return $this->render('admin/category/index.html.twig', [
+        return $this->render('admin/category/show.html.twig', [
             'categories' => $categories
         ]);
     }
@@ -37,7 +37,7 @@ class CategoryController extends AbstractController
 /*    #[Route('/product-new/{slug}', name: 'app_category_index', methods: ['GET'])]
     public function new_product(Request $request,Category $category): Response
     {
-        return $this->render('admin/category/index.html.twig', [
+        return $this->render('admin/category/show.html.twig', [
 
         ]);
     }*/

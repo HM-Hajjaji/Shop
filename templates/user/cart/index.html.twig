@@ -1,0 +1,172 @@
+{% extends 'home/index.html.twig' %}
+
+{% block title %}Cart{% endblock %}
+ {% block sub_title %}Show My Cart{% endblock %}
+{% block content %}
+    <section class="content shadow-lg">
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">My Products</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    {# <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                        <i class="fas fa-times"></i>
+                    </button> #}
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped projects">
+                    <thead>
+                    <tr>
+                        <th style="width: 1%">
+                            #
+                        </th>
+                        <th style="width: 19%">
+                            Product Name
+                        </th>
+                        <th style="width: 20%">
+                            Product Photo
+                        </th>
+                        <th style="width: 5%" class="text-center">
+                            Price
+                        </th>
+                        <th style="width: 10%" class="text-center">
+                            Date
+                        </th>
+                        <th style="width: 5%" class="text-center">
+                            Quantity
+                        </th>
+                        <th style="width: 10%">
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% set total = 0 %}
+                    {% for label,item in cart %}
+                        <tr>
+                            <td>
+                                #
+                            </td>
+                            <td>
+                                {{ item.product.name|title }}
+                            </td>
+                            <td>
+                                <img alt="{{ item.product.name }}" class="table-avatar w-50"
+                                     src="{{ asset('uploads'~item.product.photo) }}">
+                            </td>
+                            <td class="project-state">
+                                <span class="badge badge-warning">{{ item.price }} DH</span>
+                            </td>
+                            <td class="project-state">
+                                <span class="badge badge-success">{{ item.date|date('Y-m-d H:i:s') }}</span>
+                            </td>
+                            <td class="project-state">
+                                <span class="badge badge-danger">{{ item.quantity }}</span>
+                            </td>
+                            <td class="text-center">
+                                <div class="dropdown">
+                                    <a class="nav-link" data-toggle="dropdown" href="#">
+                                        <i class="fa fa-chevron-circle-down"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                        {#<div class="dropdown-divider"></div>
+                                        <a href="#"
+                                           class="dropdown-item bg-info">
+                                            <i class="fas fa-pencil-alt">
+                                            </i>
+                                            Edit
+                                        </a>#}
+                                        <div class="dropdown-divider"></div>
+                                        <a href="{{ path('app_user_cart_delete',{'label' : label}) }}"
+                                           class="dropdown-item bg-danger">
+                                            <i class="fas fa-trash">
+                                            </i>
+                                            Delete
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% set total = total + item.price %}
+                    {% else %}
+                        <tr>
+                            <td colspan="8">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer row justify-content-between">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="btn_modal">
+                    <i class="fa fa-store"></i> Shop Now
+                </button>
+                <script>
+                    let btn = document.getElementById('btn_modal');
+                    let x = {{ app.session.get('cart')|length }}
+                    if(x == 0)
+                    {
+                        btn.classList.add('d-none');
+                    }
+                </script>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary">
+                                <h5 class="modal-title" id="exampleModalLabel">Delivery Speed And Payment Methods</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="get" action="{{ path('app_user_order_detail',{'total' : total}) }}" class="list-group">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('shipping'~ app.user.slug) }}">
+                                    <label>Delivery Speed : </label>
+                                    <div class="form-group">
+                                        <label for="fast" class="list-group-item list-group-item-action">
+                                            <input type="radio" name="speed" value="fast" id="fast">
+                                            <i class="fa fa-shipping-fast"></i> Fast
+                                        </label>
+                                        <label for="average" class="list-group-item list-group-item-action">
+                                            <input type="radio" checked name="speed" value="average" id="average">
+                                            <i class="fa fa-truck"></i> Average
+                                        </label>
+                                        <label for="slow" class="list-group-item list-group-item-action">
+                                            <input type="radio" name="speed" value="slow" id="slow">
+                                            <i class="fas fa-snowflake"></i> Slow
+                                        </label>
+                                    </div>
+                                    <label>Payment Methods : </label>
+                                    <div class="form-group">
+                                        <label for="cart" class="list-group-item list-group-item-action">
+                                            <input type="radio" name="payment" value="cart" id="cart">
+                                            <i class="fa fa-cart-plus"></i> Cart
+                                        </label>
+                                        <label for="shipping" class="list-group-item list-group-item-action">
+                                            <input type="radio" checked name="payment" value="shipping" id="shipping">
+                                            <i class="fa fa-truck-moving"></i> Shipping
+                                        </label>
+                                        <button type="submit" class="btn btn-outline-primary mt-2">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 text-right">
+                    <h3 class="text-black-50">{{ total }} <i class="fa fa-money-bill"></i></h3>
+                </div>
+
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+    </section>
+{% endblock %}

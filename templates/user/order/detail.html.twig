@@ -1,0 +1,60 @@
+{% extends 'home/index.html.twig' %}
+
+{% block title %}Order{% endblock %}
+ {% block sub_title %}Detail Of Order{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-12 col-md-8 row justify-content-center">
+            {% for label,item in cart %}
+                <div class="card bg-light d-flex col-12 col-md-3 m-1">
+                <div class="card-header text-muted border-bottom-0">
+                    {{ item.product.category.name|title }}
+                </div>
+                <div class="card-body pt-0">
+                    <div class="row">
+                        <div class="col-7">
+                            <h2 class="lead"><b> {{ item.product.name|title }}</b></h2>
+                            <p class="text-muted text-sm"> {{ item.product.description|title }}</p>
+                            <ul class="ml-4 mb-0 fa-ul text-muted">
+                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-dollar-sign"></i></span> <h6><span class="badge bg-success">{{ item.price }} DH</span></h6></li>
+                            </ul>
+                        </div>
+                        <div class="col-5 text-center">
+                            <img src="{{ asset('uploads'~item.product.photo) }}" alt="user-avatar" class="img-circle img-fluid">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="text-right">
+                        <a href="{{ path('app_user_cart_delete',{'label' : label}) }}"
+                           class="btn btn-sm btn-outline-danger">
+                            <i class="fas fa-trash">
+                            </i>
+                            Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor%}
+        </div>
+        <div class="col-12 col-md-4 row align-items-center">
+            <div class="card card-primary col-12">
+                <div class="card-header">
+                    <h2 class="card-title text-center font-weight-bold">Summary</h2>
+                </div>
+                <div class="card-body text-left">
+                    <ul class="list-group">
+                        {% set mainTotal = total + speed %}
+                        <li class="list-group-item">Total shipping : {{ total }} DH</li>
+                        <li class="list-group-item">Delivery Speed : {{ speed }} DH</li>
+                        <li class="list-group-item">Payment Methods : {{ payment|title }}</li>
+                        <li class="list-group-item"><strong>Total : </strong> {{ mainTotal }} DH</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('app_user_order_new',{'total' : mainTotal,'speed' : speed,'payment' : payment})}}" class="btn btn-block btn-outline-success">Save</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

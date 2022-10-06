@@ -1,11 +1,7 @@
-{% extends 'admin/index.html.twig' %}
+{% extends 'home/index.html.twig' %}
 
-{% block title %}Show Order{% endblock %}
-{% block content_header %}
-    {% embed 'admin/component/_content_header_page.html.twig' %}
-        {% block sub_title %}Order{% endblock %}
-    {% endembed %}
-{% endblock %}
+{% block title %}Order{% endblock %}
+ {% block sub_title %}Show Order{% endblock %}
 {% block content %}
     <section class="content shadow-lg">
         <!-- Default box -->
@@ -17,9 +13,6 @@
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                         <i class="fas fa-minus"></i>
                     </button>
-                    {#<button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                        <i class="fas fa-times"></i>
-                    </button>#}
                 </div>
             </div>
             <div class="card-body p-0">

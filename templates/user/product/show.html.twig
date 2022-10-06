@@ -25,11 +25,12 @@
                     <div class="col-12 col-sm-6">
                         <h3 class="my-3">{{ product.name|title }} </h3>
                         <p>{{ product.description|title }}</p>
-                        <form action="{{ path('app_user_product_cart_add',{'slug': product.slug})}}" method="post">
+                        <form action="{{ path('app_user_cart_add',{'slug': product.slug})}}" method="post">
                             <div >
                                 <label for="quantity">Quantity</label>
                                 <input type="number" name="quantity" id="quantity" class="form-control" required autofocus placeholder="Enter Quantity" min="1" max="{{ product.quantity }}">
                             </div>
+                            {% set mainPrice = 0 %}
                             <div class="bg-gray py-2 px-3 mt-4">
                                 {% if product.discount %}
                                     <h4> <del>{{ product.price }} DH</del></h4>
@@ -39,12 +40,13 @@
                                     </h2>
                                 {% else %}
                                     <h2 class="mb-0">
-                                        {{ product.price }}
+                                        {{ product.price }} DH
                                     </h2>
                                 {% endif %}
                             </div>
                             <div class="my-2">
                                 <button type="submit" class="btn btn-sm bg-teal"><i class="fas fa-cart-plus"></i> Add To Cart</button>
+{#                                <a href="{{ path('app_user_shop',{total : mainPrice}) }}" class="btn btn btn-sm btn-primary">Buy Now</a>#}
                             </div>
                         </form>
                         {# <div class="mt-4 product-share">

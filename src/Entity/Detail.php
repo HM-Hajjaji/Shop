@@ -23,11 +23,11 @@ class Detail
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\ManyToOne(inversedBy: 'listProducts')]
+    #[ORM\ManyToOne(inversedBy: 'listProducts',cascade:['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Order $entityOrder = null;
 
-    #[ORM\ManyToOne(inversedBy: 'listOrders')]
+    #[ORM\ManyToOne(inversedBy: 'listOrders',cascade:['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $entityProduct = null;
 

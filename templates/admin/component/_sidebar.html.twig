@@ -8,10 +8,14 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('uploads/logo/user.png') }}" class="img-circle elevation-2" alt="User Image">
+                {% if app.user.profile %}
+                    <img src="{{ asset('uploads'~ app.user.profile.photo) }}" class="img-circle elevation-2" alt="User Image">
+                {% else %}
+                    <img src="{{ asset('uploads/logo/user.jpg') }}" class="img-circle elevation-2" alt="User Image">
+                {% endif %}
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ app.user.name }}</a>
+                <a href="{{ path('app_admin_profile') }}" class="d-block">{{ app.user.name|title }}</a>
             </div>
         </div>
 
@@ -88,6 +92,15 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_order_index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Orders
+                            {# <span class="right badge badge-danger">New</span>#}
+                        </p>
+                    </a>
                 </li>
                {# <li class="nav-item">
                     <a href="#" class="nav-link">

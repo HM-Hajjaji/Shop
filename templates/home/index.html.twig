@@ -53,20 +53,32 @@
                         <div class="card card-solid">
                             <div class="card-body pb-0">
                                 <div class="row">
-                                    {% for product in products %}
-                                        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
-                                            <div class="card bg-light d-flex flex-fill">
+                                    <div class="col-md-2  ">
+                                        {% for category in categorise %}
+                                            <div class="rounded shadow-lg my-2">
+                                                <a href="{{ path('app_home_filter',{'slug' : category.slug}) }}" class="dropdown-item">{{ category.name|title }}</a>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-10  row justify-content-center">
+                                        {% for product in products %}
+                                            {#<div class="col-12 col-sm-4 col-md-3 d-flex align-items-stretch flex-column">
+
+                                            </div>#}
+                                            <div class="card bg-light d-flex col-12 col-md-3 m-1">
                                                 <div class="card-header text-muted border-bottom-0">
-                                                    {{ product.category.name }}
+                                                    {{ product.category.name|title }}
                                                 </div>
                                                 <div class="card-body pt-0">
                                                     <div class="row">
                                                         <div class="col-7">
-                                                            <h2 class="lead"><b> {{ product.name }}</b></h2>
-                                                            <p class="text-muted text-sm"> {{ product.description }}</p>
+                                                            <h2 class="lead"><b> {{ product.name|title }}</b></h2>
+                                                            <p class="text-muted text-sm"> {{ product.description|title }}</p>
                                                             <ul class="ml-4 mb-0 fa-ul text-muted">
-                                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-dollar-sign"></i></span> <span class="badge bg-success">{{ product.price }}</span></li>
-                                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-percentage"></i></span> <span class="badge bg-danger">{{ product.discount }}</span></li>
+                                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-dollar-sign"></i></span> <h6><span class="badge bg-success">{{ product.price }}</span></h6></li>
+                                                                {%if product.discount %}
+                                                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-percentage"></i></span> <h6><span class="badge bg-danger">{{ product.discount }}</span></h6></li>
+                                                                {% endif %}
                                                             </ul>
                                                         </div>
                                                         <div class="col-5 text-center">
@@ -76,21 +88,18 @@
                                                 </div>
                                                 <div class="card-footer">
                                                     <div class="text-right">
-                                                        <a href="{{ path('app_user_product',{'slug':product.slug}) }}" class="btn btn-sm bg-teal">
+                                                        <a href="{{ path('app_product_show',{'slug':product.slug}) }}" class="btn btn-block btn-sm bg-teal">
                                                             <i class="fas fa-cart-plus"></i>
-                                                        </a>
-                                                        <a href="{{ path('app_user_product',{'slug':product.slug}) }}" class="btn btn-sm btn-primary">
-                                                            <i class="fas fa-info mr-1"></i> View Details
                                                         </a>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    {% else %}
-                                        <div>
-                                            <strong>No Records Found</strong>
-                                        </div>
-                                    {% endfor %}
+                                        {% else %}
+                                            <div>
+                                                <strong>No Records Found</strong>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
                                 </div>
                             </div>
                             <!-- /.card-body -->

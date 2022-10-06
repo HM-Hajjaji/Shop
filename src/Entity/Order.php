@@ -39,6 +39,12 @@ class Order
     #[ORM\OneToMany(mappedBy: 'entityOrder', targetEntity: Detail::class, orphanRemoval: true)]
     private Collection $listProducts;
 
+    #[ORM\Column(length: 255)]
+    private ?string $deliverySpeed = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $paymentMethods = null;
+
     public function __construct()
     {
         $this->listProducts = new ArrayCollection();
@@ -147,6 +153,30 @@ class Order
                 $listProduct->setEntityOrder(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDeliverySpeed(): ?string
+    {
+        return $this->deliverySpeed;
+    }
+
+    public function setDeliverySpeed(string $deliverySpeed): self
+    {
+        $this->deliverySpeed = $deliverySpeed;
+
+        return $this;
+    }
+
+    public function getPaymentMethods(): ?string
+    {
+        return $this->paymentMethods;
+    }
+
+    public function setPaymentMethods(string $paymentMethods): self
+    {
+        $this->paymentMethods = $paymentMethods;
 
         return $this;
     }

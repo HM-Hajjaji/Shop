@@ -34,7 +34,7 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\ManyToOne(inversedBy: 'products',cascade:['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
