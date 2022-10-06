@@ -24,7 +24,7 @@ class AdminController extends AbstractController
     #[Route('/dashboard', name: 'app_dashboard')]
     public function index(ChartBuilderInterface $chartBuilder,OrderRepository $orderRepository,CategoryRepository $categoryRepository,UserRepository $userRepository,ProductRepository $productRepository): Response
     {
-        $order = $orderRepository->findAll();
+        $order = $orderRepository->findBy([],['date' => 'ASC']);
         $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
         $labels = [];
         $datasets = [];

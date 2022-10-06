@@ -31,8 +31,11 @@
                         <th style="width: 30%">
                             Products Photos
                         </th>
-                        <th style="width: 20%" class="text-center">
+                        <th style="width: 10%" class="text-center">
                             Total
+                        </th>
+                        <th style="width: 10%" class="text-center">
+                            Delivery Speed
                         </th>
                         <th style="width: 10%" class="text-center">
                             Status
@@ -62,6 +65,9 @@
                             </td>
                             <td class="project-state">
                                 <span class="badge badge-warning">{{ order.total }} DH</span>
+                            </td>
+                            <td class="project-state">
+                                <span class="badge badge-dark">{{ order.deliverySpeed|title }}</span>
                             </td>
                             <td class="project-state">
                                 <span class="badge badge-success">{{ order.status|title }}</span>

@@ -7,18 +7,18 @@
        {# <span class="dropdown-header">15 Notifications</span>#}
         {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('app_dashboard') }}" class="dropdown-item">
-                <i class="fas fa-envelope mr-2"></i>Dashboard
+                <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
                 {#<span class="float-right text-muted text-sm">3 mins</span>#}
             </a>
             <div class="dropdown-divider"></div>
             <a href="{{ path('app_admin_profile') }}" class="dropdown-item">
-                <i class="fas fa-envelope mr-2"></i> Profile
+                <i class="fas fa-user mr-2"></i> Profile
                 {#<span class="float-right text-muted text-sm">3 mins</span>#}
             </a>
         {% else %}
             <div class="dropdown-divider"></div>
             <a href="{{ path('app_user_profile') }}" class="dropdown-item">
-                <i class="fas fa-envelope mr-2"></i> Profile
+                <i class="fas fa-user mr-2"></i> Profile
                 {#<span class="float-right text-muted text-sm">3 mins</span>#}
             </a>
             <div class="dropdown-divider"></div>
@@ -28,11 +28,6 @@
             </a>
         {% endif %}
 
-        <div class="dropdown-divider"></div>
-        <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i>Settings
-            {#<span class="float-right text-muted text-sm">12 hours</span>#}
-        </a>
         <div class="dropdown-divider"></div>
         <a href="{{ path('app_logout') }}" class="dropdown-item">
             <i class="fas fa-sign-out-alt mr-2"></i>Log Out
