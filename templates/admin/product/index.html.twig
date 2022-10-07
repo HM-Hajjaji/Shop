@@ -5,7 +5,9 @@
 {% block content_header %}
     {% embed 'admin/component/_content_header_page.html.twig' %}
         {% block sub_title %}Product{% endblock %}
-        {% block action %}<a href="{{ path('app_product_new') }}" class="btn btn-sm btn-outline-success">Create new</a>{% endblock %}
+        {% block action %}
+            {{ render(path('app_product_new')) }}
+        {% endblock %}
     {% endembed %}
 {% endblock %}
 {% block content %}

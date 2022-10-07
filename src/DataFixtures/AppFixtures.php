@@ -7,9 +7,17 @@ use App\Entity\Product;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
 {
+
+    private $slugger;
+    public function __construct(SluggerInterface $slugger)
+    {
+        $this->slugger = $slugger;
+    }
+
     public function load(ObjectManager $manager): void
     {
 
@@ -18,7 +26,7 @@ class AppFixtures extends Fixture
             $category = new Category();
             $category->setName('category '.$i);
             $category->setDate(new \DateTime());
-            $category->setSlug($category->getName().' '.uniqid());
+            $category->setSlug($this->slugger->slug($category->getName().' '.uniqid()));
             $category->setDescription('A card is a flexible and extensible content container. It includes options for headers and footers, a wide variety of content, contextual background colors, and powerful display options. If you’re familiar with Bootstrap 3, cards replace our old panels, wells, and thumbnails. Similar functionality to those components is available as modifier classes for cards. '.uniqid());
             for ($j = 0;$j < 20;$j++)
             {
@@ -29,7 +37,7 @@ class AppFixtures extends Fixture
                 $product->setPrice(random_int(97,243));
                 $product->setQuantity(random_int(10,80));
                 $product->setDate(new \DateTime());
-                $product->setSlug($product->getName().' '.uniqid().' '.'title');
+                $product->setSlug($this->slugger->slug($product->getName().' '.uniqid().' '.'title'));
                 $product->setCategory($category);
                 $manager->persist($product);
             }

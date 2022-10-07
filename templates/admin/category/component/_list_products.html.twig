@@ -66,7 +66,8 @@
                         <td class="project-state">
                             <span class="badge badge-danger">{{ product.quantity }}</span>
                         </td>
-                        <td class="text-center">
+                        <td>
+                            {{ render(path('app_product_edit',{'slug' : product.slug})) }}
                             <div class="dropdown">
                                 <a class="nav-link" data-toggle="dropdown" href="#">
                                     <i class="fa fa-chevron-circle-down"></i>
@@ -79,11 +80,10 @@
                                         View
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a href="{{ path('app_product_edit', {'slug': product.slug}) }}" class="dropdown-item bg-info">
-                                        <i class="fas fa-pencil-alt">
-                                        </i>
+                                    <div type="button" class="dropdown-item bg-info" data-toggle="modal" data-target="{{'#'~product.slug}}">
+                                        <i class="fas fa-edit"></i>
                                         Edit
-                                    </a>
+                                    </div>
                                     <div class="dropdown-divider"></div>
                                     {{ include('admin/product/_delete_form.html.twig',{'slug':product.slug}) }}
                                 </div>

@@ -41,7 +41,7 @@ class ProductController extends AbstractController
     public function new(Request $request): Response
     {
         $product = new Product();
-        $form = $this->createForm(ProductType::class, $product,['btn_name' => 'Create']);
+        $form = $this->createForm(ProductType::class, $product,['btn_name' => 'Create','action' => $this->generateUrl('app_product_new')]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $product->setDate(new \DateTime());
@@ -53,6 +53,7 @@ class ProductController extends AbstractController
         return $this->renderForm('admin/product/new.html.twig', [
             'product' => $product,
             'form' => $form,
+            'modal_id' => 'productNew'
         ]);
     }
 
@@ -68,7 +69,7 @@ class ProductController extends AbstractController
     public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
     {
         $photo = $product->getPhoto();
-        $form = $this->createForm(ProductType::class, $product,['btn_name' => 'Save','photo_require' => false]);
+        $form = $this->createForm(ProductType::class, $product,['btn_name' => 'Save','photo_require' => false,'action' => $this->generateUrl('app_product_edit',['slug' => $product->getSlug()])] );
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if ($request->files->get('product')['photo'])

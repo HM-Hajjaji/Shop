@@ -1,6 +1,30 @@
 {{ form_start(form)}}
-
-<section class="content">
+<div class="form-group">
+    {{ form_row(form.name,{'attr': {'class': 'form-control','placeholder' : 'Enter Product Name'}}) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.description,{'attr': {'class': 'form-control','placeholder' : 'Enter Product Description'}}) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.price,{'attr': {'class': 'form-control','placeholder' : 'Enter Price'}}) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.discount,{'attr': {'class': 'form-control','placeholder' : 'Enter Discount'}}) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.quantity,{'attr': {'class': 'form-control','placeholder' : 'Enter Quantity'}}) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.photo,{'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="form-group ">
+    {{ form_row(form.category,{'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.submit,{'attr': {'class': 'btn btn-success mr-1'}}) }}
+</div>
+{{ form_end(form) }}
+{#<section class="content">
     <div class="row">
         <div class="col-md-12" >
             <div class="card card-primary">
@@ -14,46 +38,24 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="form-group">
-                        {{ form_row(form.name,{'attr': {'class': 'form-control','placeholder' : 'Enter Product Name'}}) }}
-                    </div>
-                    <div class="form-group">
-                        {{ form_row(form.description,{'attr': {'class': 'form-control','placeholder' : 'Enter Product Description'}}) }}
-                    </div>
-                    <div class="form-group">
-                        {{ form_row(form.price,{'attr': {'class': 'form-control','placeholder' : 'Enter Price'}}) }}
-                    </div>
-                    <div class="form-group">
-                        {{ form_row(form.discount,{'attr': {'class': 'form-control','placeholder' : 'Enter Discount'}}) }}
-                    </div>
-                    <div class="form-group">
-                        {{ form_row(form.quantity,{'attr': {'class': 'form-control','placeholder' : 'Enter Quantity'}}) }}
-                    </div>
-                    <div class="form-group">
-                        {{ form_row(form.photo,{'attr': {'class': 'form-control'}}) }}
-                    </div>
-                    <div class="form-group ">
-                        {{ form_row(form.category,{'attr': {'class': 'form-control'}}) }}
-                    </div>
-                  {# <div id="photos"  data-index="{{ form.photos|length > 0 ? form.photos|last.vars.name + 1 : 0 }}"  data-prototype="{{ form_widget(form.photos.vars.prototype)|e('html_attr') }}">
+
+                  #}{# <div id="photos"  data-index="{{ form.photos|length > 0 ? form.photos|last.vars.name + 1 : 0 }}"  data-prototype="{{ form_widget(form.photos.vars.prototype)|e('html_attr') }}">
                        {% for photo in form.photos %}
                            {{ form_row(photo.photo,{'attr': {'class': 'form-control'}}) }}
                            {{ form_row(photo.status,{'attr': {'class': ''}}) }}
                        {% endfor %}
-                   </div>#}
+                   </div>#}{#
                 </div>
                 <div class="card-footer">
-                    <div class="form-group">
-                        {{ form_row(form.submit,{'attr': {'class': 'btn btn-success mr-1'}}) }}
-                    </div>
+
                 </div>
                 <!-- /.card-body -->
             </div>
             <!-- /.card -->
         </div>
     </div>
-</section>
-{{ form_end(form) }}
+</section>#}
+
 {#
 <script defer>
     const addFormToCollection = (e) => {
