@@ -1,18 +1,13 @@
-{% extends 'admin/index.html.twig' %}
+{% embed 'component/_modal.html.twig' %}
+    {%block modal_id %}{{modal_id}}{% endblock %}
+    {%block modal_bg %}bg-primary{% endblock %}
+    {%block modal_title %}New Category{% endblock %}
+    {%block modal_body %}
+        {{ include('admin/category/_form.html.twig') }}
+    {% endblock %}
+{% endembed %}
 
-{% block title %}New Category{% endblock %}
-{% block content_header %}
-    {% embed 'admin/component/_content_header_page.html.twig' %}
-        {% block sub_title %} Create New Category{% endblock %}
-    {% endembed %}
-{% endblock %}
-{% block content %}
-    {{ include('admin/category/_form.html.twig') }}
-    <div class="text-center my-2">
-        <a class="btn btn-primary btn-sm" href="{{ path('app_category_index') }}">
-            <i class="fas fa-arrow-left mr-1">
-            </i>
-            Back To List
-        </a>
-    </div>
-{% endblock %}
+<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="{{ '#'~ modal_id}}">
+    <i class="fa fa-plus mr-1"></i> New
+</button>
+<!-- Modal -->

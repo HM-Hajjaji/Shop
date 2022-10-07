@@ -1,18 +1,9 @@
-<div class="card shadow-lg card-primary">
-    <div class="card-header">
-        <h3 class="card-title">New Category</h3>
-    </div>
-    {{ form_start(form)}}
-    <div class="card-body">
-        <div class="form-group">
-            {{ form_row(form.name,{'attr': {'class': 'form-control','placeholder' : 'Enter Name'}}) }}
-        </div>
-        <div class="form-group ">
-            {{ form_row(form.description,{'attr': {'class': 'form-control','placeholder' : 'Enter Description'}}) }}
-        </div>
-    </div>
-        <div class="card-footer d-flex justify-content-start">
-            {{ form_row(form.submit,{'attr':{'class': 'btn btn-success mr-1'}}) }}
-        </div>
-    {{ form_end(form) }}
+{{ form_start(form)}}
+<div class="form-group">
+    {{ form_row(form.name,{'attr': {'class': 'form-control','placeholder' : 'Enter Name'}}) }}
 </div>
+<div class="form-group ">
+    {{ form_row(form.description,{'attr': {'class': 'form-control','style' : "height: 158px;",'placeholder' : 'Enter Description'}}) }}
+</div>
+{{ form_row(form.submit,{'attr':{'class': 'btn btn-success mr-1'}}) }}
+{{ form_end(form) }}

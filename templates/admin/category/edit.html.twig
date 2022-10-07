@@ -1,31 +1,9 @@
-{% extends 'admin/index.html.twig' %}
-
-{% block title %}Edit Category{% endblock %}
-{% block content_header %}
-    {% embed 'admin/component/_content_header_page.html.twig' %}
-        {% block sub_title %}Edit Category{% endblock %}
-        {% block action %}<a href="{{ path('app_category_new') }}" class="btn btn-sm btn-outline-success">Create new</a>{% endblock %}
-    {% endembed %}
-{% endblock %}
-{% block content %}
-    {{ include('admin/category/_form.html.twig') }}
-    <div class="card pl-2 d-flex justify-content-start shadow-lg py-2">
-        {% embed 'admin/category/component/_actions.html.twig'%}
-            {% block block_action %}
-                <a class="btn btn-primary btn" href="{{path('app_category_show', {'slug': category.slug}) }}">
-                    <i class="fas fa-folder">
-                    </i>
-                    Show
-                </a>
-            {% endblock %}
-        {% endembed %}
-    </div>
-    <div class="text-center my-2">
-        <a class="btn btn-primary btn-sm" href="{{ path('app_category_index') }}">
-            <i class="fas fa-arrow-left mr-1">
-            </i>
-            Back To List
-        </a>
-    </div>
-    {{ include('admin/category/component/_list_products.html.twig') }}
-{% endblock %}
+{% embed 'component/_modal.html.twig' %}
+    {%block modal_id %}{{category.slug}}{% endblock %}
+    {%block modal_bg %}bg-info{% endblock %}
+    {%block modal_title %}Edit Category{% endblock %}
+    {%block modal_body %}
+        {{ include('admin/category/_form.html.twig') }}
+    {% endblock %}
+{% endembed %}
+<!-- Modal -->

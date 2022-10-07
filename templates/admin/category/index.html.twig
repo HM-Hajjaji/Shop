@@ -4,7 +4,9 @@
 {% block content_header %}
     {% embed 'admin/component/_content_header_page.html.twig' %}
         {% block sub_title %}Categories{% endblock %}
-        {% block action %}<a href="{{ path('app_category_new') }}" class="btn btn-sm btn-outline-success">Create new</a>{% endblock %}
+        {% block action %}
+            {{ render(path('app_category_new')) }}
+        {% endblock %}
     {% endembed %}
 {% endblock %}
 {% block content %}
@@ -24,6 +26,7 @@
         </thead>
         <tbody>
         {% for category in categories %}
+            {{ render(path('app_category_edit',{'slug' : category.slug})) }}
             <tr>
                 <td>#</td>
                 <td>{{ category.name|title }}</td>
@@ -41,11 +44,10 @@
                                 View
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="{{ path('app_category_edit', {'slug': category.slug}) }}" class="dropdown-item bg-info">
-                                <i class="fas fa-pencil-alt">
-                                </i>
+                            <div type="button" class="dropdown-item bg-info" data-toggle="modal" data-target="{{'#'~category.slug}}">
+                                <i class="fas fa-edit"></i>
                                 Edit
-                            </a>
+                            </div>
                             <div class="dropdown-divider"></div>
                             {{ include('admin/category/_delete_form.html.twig',{'slug':category.slug}) }}
                         </div>

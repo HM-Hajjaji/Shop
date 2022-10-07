@@ -29,7 +29,7 @@ class CategoryController extends AbstractController
     {
         $categories = $this->repository->findAll();
         $categories = $this->paginator->paginate($categories,$request->query->getInt('page',1),5);
-        return $this->render('admin/category/show.html.twig', [
+        return $this->render('admin/category/index.html.twig', [
             'categories' => $categories
         ]);
     }
@@ -46,11 +46,11 @@ class CategoryController extends AbstractController
     public function new(SluggerInterface $slugger,Request $request): Response
     {
         $category = new Category();
-        $form = $this->createForm(CategoryType::class, $category,['btn_name' => "Create"]);
+        $form = $this->createForm(CategoryType::class, $category,['btn_name' => "Create",'action' => $this->generateUrl('app_category_new'),]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $category->setDate(new \DateTime());
-            $category->setSlug($slugger->slug($category->getName()." ".uniqid().' title'));
+            $category->setSlug($slugger->slug($category->getName()." ".uniqid().' title','-'));
             $this->repository->save($category, true);
             return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -58,6 +58,7 @@ class CategoryController extends AbstractController
         return $this->renderForm('admin/category/new.html.twig', [
             'category' => $category,
             'form' => $form,
+            'modal_id' => 'categoryNew'
         ]);
     }
 
@@ -75,7 +76,7 @@ class CategoryController extends AbstractController
     #[Route('/{slug}/edit', name: 'app_category_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
-        $form = $this->createForm(CategoryType::class, $category,['btn_name' => 'Save']);
+        $form = $this->createForm(CategoryType::class, $category,['btn_name' => 'Save','action' => $this->generateUrl('app_category_edit',['slug' => $category->getSlug()])]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
@@ -87,7 +88,8 @@ class CategoryController extends AbstractController
         return $this->renderForm('admin/category/edit.html.twig',[
             'category' => $category,
             'form' => $form,
-            'products' => $products
+            'products' => $products,
+            'modal_id' => str_replace(' ','',$category->getSlug())
         ]);
     }
 
