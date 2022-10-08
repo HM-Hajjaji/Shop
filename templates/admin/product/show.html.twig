@@ -4,7 +4,11 @@
 {% block content_header %}
     {% embed 'admin/component/_content_header_page.html.twig' %}
         {% block sub_title %}Product Detail{% endblock %}
-        {% block action %}<a href="{{ path('app_product_new') }}" class="btn btn-sm btn-outline-success">Create new</a>{% endblock %}
+        {% block action %}
+            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#productNew">
+                <i class="fa fa-plus mr-1"></i> New
+            </button>
+        {% endblock %}
     {% endembed %}
 {% endblock %}
 {% block content %}
@@ -84,7 +88,13 @@
                             </h4>#}
                         </div>
                         <div class="mt-3">
-                            {{ include('admin/product/component/_actions.html.twig') }}
+                            {{ render(path('app_product_edit',{'slug' : product.slug})) }}
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="{{ '#'~product.slug }}">
+                                <i class="fa fa-edit mr-1"></i> Edit
+                            </button>
+                            <a class="btn btn-danger btn-sm" href="#">
+                                {{ include('admin/product/_delete_form.html.twig',{'slug' : product.slug}) }}
+                            </a>
                         </div>
                        {# <div class="mt-4 product-share">
                             <a href="#" class="text-gray">

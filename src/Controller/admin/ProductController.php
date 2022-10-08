@@ -53,7 +53,6 @@ class ProductController extends AbstractController
         return $this->renderForm('admin/product/new.html.twig', [
             'product' => $product,
             'form' => $form,
-            'modal_id' => 'productNew'
         ]);
     }
 

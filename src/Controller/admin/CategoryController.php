@@ -30,7 +30,7 @@ class CategoryController extends AbstractController
         $categories = $this->repository->findAll();
         $categories = $this->paginator->paginate($categories,$request->query->getInt('page',1),5);
         return $this->render('admin/category/index.html.twig', [
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 
@@ -58,7 +58,6 @@ class CategoryController extends AbstractController
         return $this->renderForm('admin/category/new.html.twig', [
             'category' => $category,
             'form' => $form,
-            'modal_id' => 'categoryNew'
         ]);
     }
 

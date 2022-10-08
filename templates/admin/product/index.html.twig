@@ -6,7 +6,9 @@
     {% embed 'admin/component/_content_header_page.html.twig' %}
         {% block sub_title %}Product{% endblock %}
         {% block action %}
-            {{ render(path('app_product_new')) }}
+            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#productNew">
+                <i class="fa fa-plus mr-1"></i> New
+            </button>
         {% endblock %}
     {% endembed %}
 {% endblock %}

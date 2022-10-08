@@ -1,13 +1,9 @@
 {% embed 'component/_modal.html.twig' %}
-    {%block modal_id %}{{modal_id}}{% endblock %}
+    {%block modal_id %}categoryNew{% endblock %}
     {%block modal_bg %}bg-primary{% endblock %}
     {%block modal_title %}New Category{% endblock %}
     {%block modal_body %}
         {{ include('admin/category/_form.html.twig') }}
     {% endblock %}
 {% endembed %}
-
-<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="{{ '#'~ modal_id}}">
-    <i class="fa fa-plus mr-1"></i> New
-</button>
 <!-- Modal -->

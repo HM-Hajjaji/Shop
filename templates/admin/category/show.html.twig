@@ -4,7 +4,11 @@
 {% block content_header %}
     {% embed 'admin/component/_content_header_page.html.twig' %}
         {% block sub_title %}Category Detail{% endblock %}
-        {% block action %}<a href="{{ path('app_category_new') }}" class="btn btn-sm btn-outline-success">Create new</a>{% endblock %}
+        {% block action %}
+            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#categoryNew">
+                <i class="fa fa-plus mr-1"></i> New
+            </button>
+        {% endblock %}
     {% endembed %}
 {% endblock %}
 {% block content %}
@@ -30,8 +34,19 @@
         </tbody>
     </table>
     </div>
-    <div class="card-footer text-center">
-        {{ include('admin/category/component/_actions.html.twig') }}
+    <div class="card-footer">
+        <div class="project-actions">
+            {{ render(path('app_category_edit',{'slug' : category.slug})) }}
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="{{ '#'~category.slug }}">
+                <i class="fa fa-edit mr-1"></i> Edit
+            </button>
+            <a class="btn btn-danger btn-sm" href="#">
+                {{ include('admin/category/_delete_form.html.twig',{'slug' : category.slug}) }}
+            </a>
+            <button type="button" class="btn btn-secondary btn" data-toggle="modal" data-target="#productNew">
+                <i class="fa fa-plus mr-1"></i> New Product
+            </button>
+        </div>
     </div>
 </div>
     <div class="text-center my-2">
