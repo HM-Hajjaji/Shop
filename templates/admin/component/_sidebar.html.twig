@@ -51,16 +51,16 @@
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
+                    <ul class="nav nav-treeview pl-2">
                         <li class="nav-item">
-                            <a href="{{ path('app_category_index') }}" class="nav-link active">
-                                <i class="far fa-circle nav-icon"></i>
+                            <a href="{{ path('app_category_index') }}" class="nav-link">
+                                <i class="far fa-list-alt nav-icon"></i>
                                 <p>Categories</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a type="button" href="#" class="nav-link" data-toggle="modal" data-target="#categoryNew">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="far fa-plus-square nav-icon"></i>
                                 <p>New</p>
                             </a>
                         </li>
@@ -75,16 +75,16 @@
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
+                    <ul class="nav nav-treeview pl-2">
                         <li class="nav-item">
-                            <a href="{{ path('app_product_index') }}" class="nav-link active">
-                                <i class="far fa-circle nav-icon"></i>
+                            <a href="{{ path('app_product_index') }}" class="nav-link">
+                                <i class="far fa-list-alt nav-icon"></i>
                                 <p>Products</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" type="button" class="nav-link" data-toggle="modal" data-target="#productNew">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="far fa-plus-square nav-icon"></i>
                                 <p>New</p>
                             </a>
                         </li>
@@ -95,19 +95,17 @@
                         <i class="nav-icon fas fa-shopping-bag"></i>
                         <p>
                             Orders
-                            {# <span class="right badge badge-danger">New</span>#}
                         </p>
                     </a>
                 </li>
-               {# <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                <li class="nav-item">
+                    <a href="{{ path('app_users') }}" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
                         <p>
-                            Simple Link
-                            <span class="right badge badge-danger">New</span>
+                            Users
                         </p>
                     </a>
-                </li>#}
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

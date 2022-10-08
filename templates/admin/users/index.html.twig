@@ -1,0 +1,144 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block title %}Users{% endblock %}
+
+{% block content_header %}
+    {% embed 'admin/component/_content_header_page.html.twig' %}
+        {% block sub_title %}Users{% endblock %}
+    {% endembed %}
+{% endblock %}
+{% block content %}
+    <section class="content shadow-lg">
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Products</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    {#<button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                        <i class="fas fa-times"></i>
+                    </button>#}
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped projects">
+                    <thead>
+                    <tr>
+                        <th style="width: 1%">
+                            #
+                        </th>
+                        <th style="width: 14%">
+                            Name
+                        </th>
+                        <th style="width: 20%">
+                            Email
+                        </th>
+                        <th style="width: 15%">
+                            Profile
+                        </th>
+                        <th style="width: 20%">
+                            Address
+                        </th>
+                        <th style="width: 5%" class="text-center">
+                           Phone
+                        </th>
+                        <th style="width: 10%" class="text-center">
+                            Number Orders
+                        </th>
+                        <th style="width: 5%" class="text-center">
+                            Date
+                        </th>
+                        <th style="width: 10%">
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>
+                                #
+                            </td>
+                            <td>
+                                {{ user.name|title }}
+                            </td>
+                            <td>
+                                {{ user.email|title }}
+                            </td>
+                           {% if user.profile %}
+                               {% if user.profile.photo %}
+                                   <td>
+                                       <img alt="{{ user.name }}" class="table-avatar w-50" src="{{ asset('uploads'~user.profile.photo) }}">
+                                   </td>
+                               {% else %}
+                                   <td>
+                                       <img alt="{{ user.name }}" class="table-avatar w-50" src="{{ asset('uploads/logo/user.jpg') }}">
+                                   </td>
+                               {% endif %}
+                               <td>
+                                   {{ user.profile.address|title }}
+                               </td>
+                               <td class="project-state">
+                                   <span class="badge badge-warning">{{  user.profile.phone }}</span>
+                               </td>
+                           {% else %}
+                               <td>
+                                   <img alt="{{ user.name }}" class="table-avatar w-50" src="{{ asset('uploads/logo/user.jpg') }}">
+                               </td>
+                               <td>
+                                   {{ '-' }}
+                               </td>
+                               <td class="project-state">
+                                   <span class="badge badge-warning">{{ '-' }}</span>
+                               </td>
+                           {% endif %}
+                            <td class="project-state">
+                                <span class="badge badge-success">{{  user.orders|length }}</span>
+                            </td>
+                            <td class="project-state">
+                                <span class="badge badge-danger">{{  user.date }}</span>
+                            </td>
+                            <td>
+                                {#{{ render(path('app_product_edit',{'slug' : product.slug})) }}
+                                <div class="dropdown">
+                                    <a class="nav-link" data-toggle="dropdown" href="#">
+                                        <i class="fa fa-chevron-circle-down"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                        <div class="dropdown-divider"></div>
+                                        <a href="{{ path('app_product_show', {'slug': product.slug}) }}" class="dropdown-item bg-primary">
+                                            <i class="fas fa-folder">
+                                            </i>
+                                            View
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <div type="button" class="dropdown-item bg-info" data-toggle="modal" data-target="{{'#'~product.slug}}">
+                                            <i class="fas fa-edit"></i>
+                                            Edit
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        {{ include('admin/product/_delete_form.html.twig',{'slug':product.slug}) }}
+                                    </div>
+                                </div>#}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="8">no records found</td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+{#                {{ knp_pagination_render(products) }}#}
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+    </section>
+{% endblock %}
