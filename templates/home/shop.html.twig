@@ -92,15 +92,22 @@
                                                 <h6 class="text-black-50 text-center font-weight-bold fs-2"><del>$ {{ product.price }} DH</del></h6>
                                             {% endif %}
 
-                                            {% if app.user.contains_user(product) %}
-                                                <span class="badge badge-pill badge-light"><i class="fa fa-heart fa-2x" style="color: red;"></i></span>
+                                            {% if app.user %}
+                                                {% if app.user.contains_user(product) %}
+                                                    <span class="badge badge-pill badge-light"><i class="fa fa-heart fa-2x" style="color: red;"></i></span>
+                                                {% endif %}
                                             {% endif %}
                                         </div>
                                         <dic class="card-footer clearfix row justify-content-around">
-                                            {% if app.user.contains_user(product) %}
-                                                <a href="#" class="btn bg-cyan col-12" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
+                                            {% if app.user %}
+                                                {% if app.user.contains_user(product) %}
+                                                    <a href="{{ path('app_product_user_show',{'slug' : product.slug}) }}" class="btn bg-cyan col-12" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
+                                                {% else %}
+                                                    <a href="{{ path('app_product_user_show',{'slug' : product.slug}) }}" class="btn bg-cyan col-5" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
+                                                    <a href="{{ path('app_user_add_wishlist',{'slug' : product.slug}) }}" class="btn btn-outline-dark col-5" title="Add to Wishlist"><i class="fa fa-heart" style="color: red;"></i></a>
+                                                {% endif %}
                                             {% else %}
-                                                <a href="#" class="btn bg-cyan col-5" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
+                                                <a href="{{ path('app_product_user_show',{'slug' : product.slug}) }}" class="btn bg-cyan col-5" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
                                                 <a href="{{ path('app_user_add_wishlist',{'slug' : product.slug}) }}" class="btn btn-outline-dark col-5" title="Add to Wishlist"><i class="fa fa-heart" style="color: red;"></i></a>
                                             {% endif %}
                                         </dic>

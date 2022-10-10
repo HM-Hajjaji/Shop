@@ -21,7 +21,7 @@
                             <img src="{{ asset('uploads'~item.photo) }}" alt="{{ item.name }}" class="img-size-50">
                         </div>
                         <div class="product-info">
-                            <a href="#" class="product-title">{{ item.name|title }}
+                            <a href="{{ path('app_product_user_show',{'slug' : item.slug}) }}" class="product-title">{{ item.name|title }}
                                 <span class="badge badge-warning float-right">${{ item.price }}</span>
                             </a>
                             <span class="product-description">{{ item.description|title }}

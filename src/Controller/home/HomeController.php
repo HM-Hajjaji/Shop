@@ -66,10 +66,14 @@ class HomeController extends AbstractController
     }
 
     #[Route('/product/{slug}', name: 'app_product_user_show')]
-    public function show(Product $product): Response
+    public function show(Product $product,ProductRepository $productRepository): Response
     {
+        $category = $product->getCategory();
+        $products = $productRepository->findBy(['category' => $category],['date' => 'DESC'],10);
         return $this->render('user/product/show.html.twig', [
-            'product' => $product
+            'product' => $product,
+            'products' => $products,
+            'category' => $category
         ]);
     }
 

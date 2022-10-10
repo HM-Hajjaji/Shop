@@ -1,7 +1,8 @@
-{% extends 'home/index.html.twig' %}
+{% extends 'home/shop.html.twig' %}
 
 {% block title %}Product Detail{% endblock %}
  {% block sub_title %}Show Product{% endblock %}
+
 {% block content %}
     <!-- Main content -->
     <section class="content shadow-lg">
@@ -25,10 +26,16 @@
                     <div class="col-12 col-sm-6">
                         <h3 class="my-3">{{ product.name|title }} </h3>
                         <p>{{ product.description|title }}</p>
+                        {% if product.quantity > 0 %}
+                            {% set available = "In stock" %}
+                        {% else %}
+                            {% set available = "Not in stock" %}
+                        {% endif %}
+                        <span><strong>Available -</strong> <span class="badge badge-success">{{available}}</span></span>
                         <form action="{{ path('app_user_cart_add',{'slug': product.slug})}}" method="post">
                             <div >
                                 <label for="quantity">Quantity</label>
-                                <input type="number" name="quantity" id="quantity" class="form-control" required autofocus placeholder="Enter Quantity" min="1" max="{{ product.quantity }}">
+                                <input type="number" name="quantity" id="quantity" class="form-control w-50" required autofocus placeholder="Enter Quantity" min="1" max="{{ product.quantity }}">
                             </div>
                             {% set mainPrice = 0 %}
                             <div class="bg-gray py-2 px-3 mt-4">
@@ -44,30 +51,126 @@
                                     </h2>
                                 {% endif %}
                             </div>
-                            <div class="my-2">
-                                <button type="submit" class="btn btn-sm bg-teal"><i class="fas fa-cart-plus"></i> Add To Cart</button>
-{#                                <a href="{{ path('app_user_shop',{total : mainPrice}) }}" class="btn btn btn-sm btn-primary">Buy Now</a>#}
-                            </div>
-                        </form>
-                        {# <div class="mt-4 product-share">
-                            <a href="#" class="text-gray">
-                                <i class="fab fa-facebook-square fa-2x"></i>
-                            </a>
-                            <a href="#" class="text-gray">
-                                <i class="fab fa-twitter-square fa-2x"></i>
-                            </a>
-                            <a href="#" class="text-gray">
-                                <i class="fas fa-envelope-square fa-2x"></i>
-                            </a>
-                            <a href="#" class="text-gray">
-                                <i class="fas fa-rss-square fa-2x"></i>
-                            </a>
-                        </div>#}
-
                     </div>
                 </div>
             </div>
+            <div class="card-footer text-right clearfix">
+                <div class="my-2">
+                    <button type="submit" class="btn bg-teal"><i class="fas fa-cart-plus"></i> Add To Cart</button>
+                    <a href="{{ path('app_user_add_wishlist',{'slug' : product.slug}) }}" class="btn btn-outline-secondary col-1" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
+                </div>
+            </div>
+            </form>
             <!-- /.card-body -->
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info"><i class="fa fa-medal"></i></span>
+                    <div class="info-box-content">
+                        <span class="text font-weight-bolder">100% Original</span>
+                        <span class="text font-weight-light">Fast delivery in all cities of Morocco</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-warning"><i class="fa fa-clock"></i></span>
+                    <div class="info-box-content">
+                        <span class="text font-weight-bolder">10 Day Replacement</span>
+                        <span class="text font-weight-light">Online Service For New Customer</span>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-danger"><i class="fa fa-shield-alt"></i></span>
+                    <div class="info-box-content">
+                        <span class="text font-weight-bolder">1 Year Warranty</span>
+                        <span class="text font-weight-light">New Online Special Festival Offer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center shadow my-2 p-3" style="background-color: #fff;border-radius: 10px">
+            <h2 class="font-weight-bolder mb-4">Related products <a class="btn btn-sm ml-2 btn-outline-danger float-right " href="{{ path('app_home_filter',{'slug' : category.slug}) }}">Show All</a></h2>
+           {# <div class="row justify-content-around">
+                {% for product in products %}
+                    <div class="swiper-slide card shadow col-xl-2 col-md-3 col-sm-4 mx-2" style="border-radius: 10px">
+                        <div class="card-header">
+                            <img class="card-img-top" src="{{ asset('uploads'~product.photo) }}"
+                                 alt="{{ product.name }}">
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-center text-primary font-weight-bold fs-4">{{ product.name|title }}</h5>
+                            {% set mainPrice = product.price - ((product.price * product.discount)/100) %}
+                            <h5 class="text-danger text-center font-weight-bold fs-3">$ {{ mainPrice }} DH</h5>
+                            {% if product.discount > 0%}
+                                <h6 class="text-black-50 text-center font-weight-bold fs-2"><del>$ {{ product.price }} DH</del></h6>
+                            {% endif %}
+
+                            {% if app.user %}
+                                {% if app.user.contains_user(product) %}
+                                    <span class="badge badge-pill badge-light"><i class="fa fa-heart fa-2x" style="color: red;"></i></span>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        <dic class="card-footer clearfix row justify-content-around">
+                            {% if app.user %}
+                                {% if app.user.contains_user(product) %}
+                                    <a href="{{ path('app_product_user_show',{'slug' : product.slug}) }}" class="btn bg-cyan col-12" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
+                                {% else %}
+                                    <a href="{{ path('app_product_user_show',{'slug' : product.slug}) }}" class="btn bg-cyan col-5" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
+                                    <a href="{{ path('app_user_add_wishlist',{'slug' : product.slug}) }}" class="btn btn-outline-dark col-5" title="Add to Wishlist"><i class="fa fa-heart" style="color: red;"></i></a>
+                                {% endif %}
+                            {% else %}
+                                <a href="{{ path('app_product_user_show',{'slug' : product.slug}) }}" class="btn bg-cyan col-5" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
+                                <a href="{{ path('app_user_add_wishlist',{'slug' : product.slug}) }}" class="btn btn-outline-dark col-5" title="Add to Wishlist"><i class="fa fa-heart" style="color: red;"></i></a>
+                            {% endif %}
+                        </dic>
+                        {% set datePost = product.date|date('d-m-Y') %}
+                        {% set today = "now"|date('d-m-Y') %}
+                        {% set difference = date(today).diff(date(datePost))%}
+                        {% set leftDays = difference.days %}
+                        {% if leftDays < 15 %}
+                            <div class="ribbon-wrapper ribbon-lg">
+                                <div class="ribbon bg-success text-lg">
+                                    New
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div>
+                        <strong>No Records Found</strong>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <script>
+                var swiper = new Swiper(".mySwiper", {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                    slidesPerGroup: 3,
+                    loop: true,
+                    loopFillGroupWithBlank: true,
+                    pagination: {
+                        el: ".swiper-pagination",
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: ".swiper-button-next",
+                        prevEl: ".swiper-button-prev",
+                    },
+                });
+            </script>#}
+            {{ include('user/product/swiper_list.html.twig') }}
         </div>
         <!-- /.card -->
     </section>

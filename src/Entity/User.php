@@ -229,7 +229,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (!$this->wishlist->contains($wishlist)) {
             $this->wishlist->add($wishlist);
         }
-
         return $this;
     }
 
