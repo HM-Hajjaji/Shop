@@ -1,0 +1,10 @@
+{% extends 'home/shop.html.twig' %}
+
+{% block title %}My Wishlist{% endblock %}
+ {% block sub_title %}Wishlist{% endblock %}
+{% block content %}
+    {% for item in wishlist%}
+        {{ dump(item) }}
+    {% endfor %}
+
+{% endblock %}

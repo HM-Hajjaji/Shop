@@ -3,6 +3,7 @@
 namespace App\Controller\user;
 
 use App\Entity\Order;
+use App\Entity\Product;
 use App\Entity\Profile;
 use App\Entity\User;
 use App\Form\ChangePassType;
@@ -74,4 +75,29 @@ class UserController extends AbstractController
         return $this->renderForm('user/profile/index.html.twig',['form_profile' => $form_profile,'form_password' => $form_password]);
     }
 
+    #[Route('/wishlist', name: 'app_user_wishlist')]
+    public function WishList()
+    {
+        $user = $this->getUser();
+        $wishlist = $user->getWishlist();
+        return $this->render('user/wishlist/index.html.twig',[
+            'wishlist' => $wishlist
+        ]);
+    }
+    #[Route('/{slug}/add-wishlist', name: 'app_user_add_wishlist')]
+    public function addToWishList(Product $product,UserRepository $userRepository)
+    {
+        $user = $this->getUser();
+        $user->addWishlist($product);
+        $userRepository->save($user,true);
+        return $this->redirectToRoute('app_user_wishlist');
+    }
+    #[Route('/{slug}/delete-wishlist', name: 'app_user_delete_wishlist')]
+    public function deleteFromWishList(Product $product,UserRepository $userRepository)
+    {
+        $user = $this->getUser();
+        $user->removeWishlist($product);
+        $userRepository->save($user,true);
+        return $this->redirectToRoute('app_user_wishlist');
+    }
 }

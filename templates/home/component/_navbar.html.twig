@@ -15,38 +15,14 @@
                     <a href="{{ path('app_home') }}" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Contact</a>
+                    <a href="{{ path('app_shop') }}" class="nav-link">Shop</a>
                 </li>
-                {#<li class="nav-item dropdown">
-                    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Categorise</a>
-                    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-
-                        #}{#<li class="dropdown-divider"></li>#}{#
-                        <!-- Level two dropdown-->
-                        #}{#<li class="dropdown-submenu dropdown-hover">
-                            <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Hover for action</a>
-                            <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
-                                <li>
-                                    <a tabindex="-1" href="#" class="dropdown-item">level 2</a>
-                                </li>
-
-                                <!-- Level three dropdown-->
-                                <li class="dropdown-submenu">
-                                    <a id="dropdownSubMenu3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">level 2</a>
-                                    <ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-0 shadow">
-                                        <li><a href="#" class="dropdown-item">3rd level</a></li>
-                                        <li><a href="#" class="dropdown-item">3rd level</a></li>
-                                    </ul>
-                                </li>
-                                <!-- End Level three -->
-
-                                <li><a href="#" class="dropdown-item">level 2</a></li>
-                                <li><a href="#" class="dropdown-item">level 2</a></li>
-                            </ul>
-                        </li>#}{#
-                        <!-- End Level two -->
-                    </ul>
-                </li>#}
+                <li class="nav-item">
+                    <a href="#" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_contact') }}" class="nav-link">Contact</a>
+                </li>
             </ul>
 
             <!-- SEARCH FORM -->
@@ -67,14 +43,18 @@
             <!-- Messages Dropdown Menu -->
             {% if app.user %}
                 {{ include('component/_dropdown_link_user.html.twig') }}
-                {% if app.session.has('cart') %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_user_cart_index') }}" role="button" data-toggle="tooltip" data-placement="top" title="My Cart">
                             <i class="fas fa-cart-plus"></i>
                             <span class="badge badge-success navbar-badge">{{ app.session.get('cart')|length }}</span>
                         </a>
                     </li>
-                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_user_wishlist') }}" role="button" title="Wishlist">
+                        <i class="far fa-heart"></i>
+                        <span class="badge badge-success navbar-badge">{{ app.user.wishlist|length }}</span>
+                    </a>
+                </li>
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_login') }}" role="button" data-toggle="tooltip" data-placement="top" title="Log In">
@@ -93,12 +73,6 @@
                 </a>
             </li>
             <!-- Notifications Dropdown Menu -->
-
-          {#  <li class="nav-item">
-                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                    <i class="fas fa-th-large"></i>
-                </a>
-            </li>#}
         </ul>
     </div>
 </nav>

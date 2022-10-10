@@ -24,6 +24,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "admin-lte": "3.2"
+        "admin-lte": "3.2",
+        "bootstrap": "^5.2.2"
     }
 }

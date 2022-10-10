@@ -48,9 +48,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date = null;
 
+    #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'users')]
+    private Collection $wishlist;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
+        $this->wishlist = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -207,6 +211,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDate(?\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getWishlist(): Collection
+    {
+        return $this->wishlist;
+    }
+
+    public function addWishlist(Product $wishlist): self
+    {
+        if (!$this->wishlist->contains($wishlist)) {
+            $this->wishlist->add($wishlist);
+        }
+
+        return $this;
+    }
+
+    public function removeWishlist(Product $wishlist): self
+    {
+        $this->wishlist->removeElement($wishlist);
 
         return $this;
     }

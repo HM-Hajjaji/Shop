@@ -15,12 +15,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(CategoryRepository $categoryRepository, ProductRepository $productRepository ,Request $request,PaginatorInterface $paginator): Response
+    public function index(ProductRepository $productRepository): Response
+    {
+        $products =$productRepository->findBy([],['date' => 'DESC'],10);
+        return $this->render('home/index.html.twig',[
+            'products' =>$products,
+        ]);
+    }
+    #[Route('/shop/{text?}', name: 'app_shop')]
+    public function shop(CategoryRepository $categoryRepository, ProductRepository $productRepository ,Request $request,PaginatorInterface $paginator): Response
     {
         $categories =$categoryRepository->findAll();
         $products =$productRepository->findBy([],['date' => 'DESC']);
         $products = $paginator->paginate($products,$request->query->getInt('page',1),10);
-        return $this->render('home/index.html.twig',[
+        return $this->render('home/shop.html.twig',[
             'categorise' => $categories,
             'products' =>$products
         ]);
@@ -31,7 +39,7 @@ class HomeController extends AbstractController
         $categories =$categoryRepository->findAll();
         $products =$category->getProducts();
         $products = $paginator->paginate($products,$request->query->getInt('page',1),10);
-        return $this->render('home/index.html.twig',[
+        return $this->render('home/shop.html.twig',[
             'products' =>$products,
             'categorise' => $categories,
         ]);
@@ -45,4 +53,9 @@ class HomeController extends AbstractController
         ]);
     }
 
+    #[Route('/contact', name: 'app_contact')]
+    public function contact(): Response
+    {
+        return $this->render('home/contact.html.twig');
+    }
 }
