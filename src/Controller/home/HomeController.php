@@ -22,7 +22,7 @@ class HomeController extends AbstractController
             'products' =>$products,
         ]);
     }
-    #[Route('/shop/{text?}', name: 'app_shop')]
+    #[Route('/shop', name: 'app_shop')]
     public function shop(CategoryRepository $categoryRepository, ProductRepository $productRepository ,Request $request,PaginatorInterface $paginator): Response
     {
         $categories =$categoryRepository->findAll();
@@ -33,6 +33,23 @@ class HomeController extends AbstractController
             'products' =>$products
         ]);
     }
+
+    #[Route('/shop/search', name: 'app_search')]
+    public function search(CategoryRepository $categoryRepository, ProductRepository $productRepository ,Request $request,PaginatorInterface $paginator): Response
+    {
+        if($request->get('search') == null )
+        {
+            return $this->redirectToRoute('app_shop');
+        }
+        $categories =$categoryRepository->findAll();
+        $products =$productRepository->findBy(['name' => $request->get('search')]);
+        $products = $paginator->paginate($products,$request->query->getInt('page',1),10);
+        return $this->render('home/shop.html.twig',[
+            'categorise' => $categories,
+            'products' =>$products
+        ]);
+    }
+
     #[Route('/category/{slug}', name: 'app_home_filter')]
     public function filter(Category $category,CategoryRepository $categoryRepository,Request $request,PaginatorInterface $paginator): Response
     {
