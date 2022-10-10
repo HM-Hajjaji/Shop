@@ -6,35 +6,35 @@
     <div class="row">
         <div class="col-12 col-md-8 row justify-content-center">
             {% for label,item in cart %}
-                <div class="card bg-light d-flex col-12 col-md-3 m-1">
-                <div class="card-header text-muted border-bottom-0">
-                    {{ item.product.category.name|title }}
-                </div>
-                <div class="card-body pt-0">
-                    <div class="row">
-                        <div class="col-7">
-                            <h2 class="lead"><b> {{ item.product.name|title }}</b></h2>
-                            <p class="text-muted text-sm"> {{ item.product.description|title }}</p>
-                            <ul class="ml-4 mb-0 fa-ul text-muted">
-                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-dollar-sign"></i></span> <h6><span class="badge bg-success">{{ item.price }} DH</span></h6></li>
-                            </ul>
-                        </div>
-                        <div class="col-5 text-center">
-                            <img src="{{ asset('uploads'~item.product.photo) }}" alt="user-avatar" class="img-circle img-fluid">
-                        </div>
+                <div class="card shadow col-xl-3 col-ms-4 col-sm-5 m-2" style="border-radius: 10px">
+                    <div class="card-header">
+                        <img class="card-img-top" src="{{ asset('uploads'~item.product.photo) }}"
+                             alt="{{  item.product.name|title }}">
                     </div>
-                </div>
-                <div class="card-footer">
-                    <div class="text-right">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-center text-primary font-weight-bold fs-4">{{ item.product.name|title }}</h5>
+                        <h5 class="text-danger text-center font-weight-bold fs-3">$ {{ item.price  }} DH</h5>
+                    </div>
+                    <dic class="card-footer clearfix">
                         <a href="{{ path('app_user_cart_delete',{'label' : label}) }}"
-                           class="btn btn-sm btn-outline-danger">
+                           class="btn btn-sm btn-block btn-outline-danger">
                             <i class="fas fa-trash">
                             </i>
                             Delete
                         </a>
-                    </div>
+                    </dic>
+                    {% set datePost = item.product.date|date('d-m-Y') %}
+                    {% set today = "now"|date('d-m-Y') %}
+                    {% set difference = date(today).diff(date(datePost))%}
+                    {% set leftDays = difference.days %}
+                    {% if leftDays < 15 %}
+                        <div class="ribbon-wrapper ribbon-lg">
+                            <div class="ribbon bg-success text-lg">
+                                New
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
-            </div>
             {% endfor%}
         </div>
         <div class="col-12 col-md-4 row align-items-center">

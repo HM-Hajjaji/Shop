@@ -58,7 +58,7 @@
                             </td>
                             <td>
                                 {%for detail in order.getListProducts() %}
-                                    <img alt="{{ detail.getEntityProduct().name }}" class="table-avatar w-25"
+                                    <img alt="{{ detail.getEntityProduct().name }}" class="table-avatar img-size-64"
                                          src="{{ asset('uploads'~detail.getEntityProduct().photo) }}">
                                 {% endfor %}
 
