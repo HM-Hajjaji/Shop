@@ -46,35 +46,6 @@
                         <div class="content p-3">
                             <div class="row justify-content-around">
                                 {% for product in products %}
-                                    {# <div class="card bg-light d-flex col-12 col-md-3 m-1">
-                                                <div class="card-header text-muted border-bottom-0">
-                                                    {{ product.category.name|title }}
-                                                </div>
-                                                <div class="card-body pt-0">
-                                                    <div class="row">
-                                                        <div class="col-7">
-                                                            <h2 class="lead"><b> {{ product.name|title }}</b></h2>
-                                                            <p class="text-muted text-sm"> {{ product.description|title }}</p>
-                                                            <ul class="ml-4 mb-0 fa-ul text-muted">
-                                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-dollar-sign"></i></span> <h6><span class="badge bg-success">{{ product.price }}</span></h6></li>
-                                                                {%if product.discount %}
-                                                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-percentage"></i></span> <h6><span class="badge bg-danger">{{ product.discount }}</span></h6></li>
-                                                                {% endif %}
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-5 text-center">
-                                                            <img src="{{ asset('uploads'~product.photo) }}" alt="user-avatar" class="img-circle img-fluid">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <div class="text-right">
-                                                        <a href="{{ path('app_product_user_show',{'slug':product.slug}) }}" class="btn btn-block btn-sm bg-teal">
-                                                            <i class="fas fa-cart-plus"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div> #}
                                     <div class="card shadow col-xl-2 col-md-3 col-sm-4 mx-2" style="border-radius: 10px">
                                         <div class="card-header">
                                             <img class="card-img-top" src="{{ asset('uploads'~product.photo) }}"
@@ -87,10 +58,18 @@
                                             {% if product.discount > 0%}
                                                 <h6 class="text-black-50 text-center font-weight-bold fs-2"><del>$ {{ product.price }} DH</del></h6>
                                             {% endif %}
+
+                                            {% if app.user.contains_user(product) %}
+                                                <span class="badge badge-pill badge-light"><i class="fa fa-heart fa-2x" style="color: red;"></i></span>
+                                            {% endif %}
                                         </div>
-                                        <dic class="card-footer row justify-content-around">
-                                            <a href="#" class="btn bg-cyan col-5" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
-                                            <a href="{{ path('app_user_add_wishlist',{'slug' : product.slug}) }}" class="btn btn-outline-dark col-5" title="Add to Wishlist"><i class="fa fa-heart" style="color: red;"></i></a>
+                                        <dic class="card-footer clearfix row justify-content-around">
+                                            {% if app.user.contains_user(product) %}
+                                                <a href="#" class="btn bg-cyan col-12" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
+                                            {% else %}
+                                                <a href="#" class="btn bg-cyan col-5" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
+                                                <a href="{{ path('app_user_add_wishlist',{'slug' : product.slug}) }}" class="btn btn-outline-dark col-5" title="Add to Wishlist"><i class="fa fa-heart" style="color: red;"></i></a>
+                                            {% endif %}
                                         </dic>
                                         {% set datePost = product.date|date('d-m-Y') %}
                                         {% set today = "now"|date('d-m-Y') %}
@@ -152,35 +131,6 @@
 
                         <div class="row justify-content-around mt-4">
                             {% for product in products %}
-                                {# <div class="card bg-light d-flex col-12 col-md-3 m-1">
-                                                <div class="card-header text-muted border-bottom-0">
-                                                    {{ product.category.name|title }}
-                                                </div>
-                                                <div class="card-body pt-0">
-                                                    <div class="row">
-                                                        <div class="col-7">
-                                                            <h2 class="lead"><b> {{ product.name|title }}</b></h2>
-                                                            <p class="text-muted text-sm"> {{ product.description|title }}</p>
-                                                            <ul class="ml-4 mb-0 fa-ul text-muted">
-                                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-dollar-sign"></i></span> <h6><span class="badge bg-success">{{ product.price }}</span></h6></li>
-                                                                {%if product.discount %}
-                                                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-percentage"></i></span> <h6><span class="badge bg-danger">{{ product.discount }}</span></h6></li>
-                                                                {% endif %}
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-5 text-center">
-                                                            <img src="{{ asset('uploads'~product.photo) }}" alt="user-avatar" class="img-circle img-fluid">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <div class="text-right">
-                                                        <a href="{{ path('app_product_user_show',{'slug':product.slug}) }}" class="btn btn-block btn-sm bg-teal">
-                                                            <i class="fas fa-cart-plus"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div> #}
                                 <div class="card shadow col-xl-2 col-md-3 col-sm-4 mx-2" style="border-radius: 10px">
                                     <div class="card-header">
                                         <img class="card-img-top" src="{{ asset('uploads'~product.photo) }}"
@@ -193,10 +143,18 @@
                                         {% if product.discount > 0%}
                                             <h6 class="text-black-50 text-center font-weight-bold fs-2"><del>$ {{ product.price }} DH</del></h6>
                                         {% endif %}
+
+                                        {% if app.user.contains_user(product) %}
+                                            <span class="badge badge-pill badge-light"><i class="fa fa-heart fa-2x" style="color: red;"></i></span>
+                                        {% endif %}
                                     </div>
-                                    <dic class="card-footer row justify-content-around">
-                                        <a href="#" class="btn bg-cyan col-5" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
-                                        <a href="{{ path('app_user_add_wishlist',{'slug' : product.slug}) }}" class="btn btn-outline-dark col-5" title="Add to Wishlist"><i class="fa fa-heart" style="color: red;"></i></a>
+                                    <dic class="card-footer clearfix row justify-content-around">
+                                        {% if app.user.contains_user(product) %}
+                                            <a href="#" class="btn bg-cyan col-12" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
+                                        {% else %}
+                                            <a href="#" class="btn bg-cyan col-5" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
+                                            <a href="{{ path('app_user_add_wishlist',{'slug' : product.slug}) }}" class="btn btn-outline-dark col-5" title="Add to Wishlist"><i class="fa fa-heart" style="color: red;"></i></a>
+                                        {% endif %}
                                     </dic>
                                     {% set datePost = product.date|date('d-m-Y') %}
                                     {% set today = "now"|date('d-m-Y') %}

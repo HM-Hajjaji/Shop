@@ -39,20 +39,34 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Product[] Returns an array of Product objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
+ /*   public function search(string $text): array
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            "SELECT p
+            FROM App\Entity\Product p
+            WHERE p.name like :text
+            ORDER BY p.date ASC"
+        )->setParameter('text', '%'.$text.'%');
+        // returns an array of Product objects
+        return $query->getResult();
+    }*/
+
+    /**
+     * @return Product[] Returns an array of Product objects
+     */
+    public function search($value): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.price like :val')
+            ->orWhere('p.name like :val')
+            ->setParameter('val',  '%'.$value.'%')
+            ->orderBy('p.date', 'DESC')
 //            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?Product
 //    {

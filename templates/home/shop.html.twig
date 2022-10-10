@@ -71,7 +71,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-10 row justify-content-center">
+                            <div class="col-md-10 d-flex flex-column">
+                                {% if name %}
+                                <div class="text-center shadow mb-2 p-3" style="background-color: #fff;border-radius: 10px">
+                                    <h2 class="font-weight-bolder text-orange d-inline border-bottom">{{ name|title }}</h2>
+                                </div>
+                                {% endif %}
+                                <div class="row justify-content-center">
                                 {% for product in products %}
                                     <div class="card shadow col-xl-2 col-md-3 col-sm-4 mx-4" style="border-radius: 10px">
                                         <div class="card-header">
@@ -85,10 +91,18 @@
                                             {% if product.discount > 0%}
                                                 <h6 class="text-black-50 text-center font-weight-bold fs-2"><del>$ {{ product.price }} DH</del></h6>
                                             {% endif %}
+
+                                            {% if app.user.contains_user(product) %}
+                                                <span class="badge badge-pill badge-light"><i class="fa fa-heart fa-2x" style="color: red;"></i></span>
+                                            {% endif %}
                                         </div>
-                                        <dic class="card-footer row justify-content-around">
-                                            <a href="#" class="btn bg-cyan col-5" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
-                                            <a href="{{ path('app_user_add_wishlist',{'slug' : product.slug}) }}" class="btn btn-outline-dark col-5" title="Add to Wishlist"><i class="fa fa-heart" style="color: red;"></i></a>
+                                        <dic class="card-footer clearfix row justify-content-around">
+                                            {% if app.user.contains_user(product) %}
+                                                <a href="#" class="btn bg-cyan col-12" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
+                                            {% else %}
+                                                <a href="#" class="btn bg-cyan col-5" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
+                                                <a href="{{ path('app_user_add_wishlist',{'slug' : product.slug}) }}" class="btn btn-outline-dark col-5" title="Add to Wishlist"><i class="fa fa-heart" style="color: red;"></i></a>
+                                            {% endif %}
                                         </dic>
                                         {% set datePost = product.date|date('d-m-Y') %}
                                         {% set today = "now"|date('d-m-Y') %}
@@ -107,13 +121,12 @@
                                         <strong>No Records Found</strong>
                                     </div>
                                 {% endfor %}
+                                </div>
                             </div>
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer">
-                            <nav aria-label="Contacts Page Navigation">
-                                {{ knp_pagination_render(products) }}
-                            </nav>
+                        <div class="card-footer clearfix ">
+                            {{ knp_pagination_render(products) }}
                         </div>
                         <!-- /.card -->
                     </section>

@@ -30,7 +30,8 @@ class HomeController extends AbstractController
         $products = $paginator->paginate($products,$request->query->getInt('page',1),10);
         return $this->render('home/shop.html.twig',[
             'categorise' => $categories,
-            'products' =>$products
+            'products' =>$products,
+            'name' => ''
         ]);
     }
 
@@ -42,11 +43,12 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('app_shop');
         }
         $categories =$categoryRepository->findAll();
-        $products =$productRepository->findBy(['name' => $request->get('search')]);
+        $products =$productRepository->search($request->get('search'));
         $products = $paginator->paginate($products,$request->query->getInt('page',1),10);
         return $this->render('home/shop.html.twig',[
             'categorise' => $categories,
-            'products' =>$products
+            'products' =>$products,
+            'name' => ''
         ]);
     }
 
@@ -59,6 +61,7 @@ class HomeController extends AbstractController
         return $this->render('home/shop.html.twig',[
             'products' =>$products,
             'categorise' => $categories,
+            'name' => $category->getName()
         ]);
     }
 

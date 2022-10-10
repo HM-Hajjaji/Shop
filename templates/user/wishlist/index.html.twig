@@ -3,8 +3,39 @@
 {% block title %}My Wishlist{% endblock %}
  {% block sub_title %}Wishlist{% endblock %}
 {% block content %}
-    {% for item in wishlist%}
-        {{ dump(item) }}
-    {% endfor %}
+    <div class="card container">
+        <div class="card-header">
+            <h3 class="card-title">Products</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
 
+        <div class="card-body p-0">
+            <ul class="products-list product-list-in-card pl-2 pr-2">
+                {% for item in wishlist %}
+                    <li class="item">
+                        <div class="product-img">
+                            <img src="{{ asset('uploads'~item.photo) }}" alt="{{ item.name }}" class="img-size-50">
+                        </div>
+                        <div class="product-info">
+                            <a href="#" class="product-title">{{ item.name|title }}
+                                <span class="badge badge-warning float-right">${{ item.price }}</span>
+                            </a>
+                            <span class="product-description">{{ item.description|title }}
+                                <a href="{{ path('app_user_delete_wishlist',{'slug' : item.slug}) }}" class="badge badge-danger float-right"><i class="fa fa-trash"></i></a>
+                            </span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {#<div class="card-footer text-center">
+            <a href="#" class="uppercase">View All Products</a>
+        </div>#}
+
+    </div>
 {% endblock %}
