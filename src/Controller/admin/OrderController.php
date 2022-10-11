@@ -23,21 +23,38 @@ class OrderController extends AbstractController
         $this->paginator = $paginator;
     }
 
-    #[Route('/order', name: 'app_order_index', methods: ['GET'])]
-    public function index(Request $request): Response
+    #[Route('/order/{status?}', name: 'app_order_index', methods: ['GET'],defaults: ['status' => 'all'])]
+    public function index(Request $request,$status): Response
     {
-        $orders = $this->repository->findBy([],['date' => 'DESC']);
-        $orders = $this->paginator->paginate($orders,$request->query->getInt('page',1),5);
+        if ($status != "all")
+        {
+            $orders = $this->repository->findBy(['status' => $status],['date' => 'DESC']);
+            $orders = $this->paginator->paginate($orders,$request->query->getInt('page',1),5);
+        }
+        else{
+            $orders = $this->repository->findBy([],['date' => 'DESC']);
+            $orders = $this->paginator->paginate($orders,$request->query->getInt('page',1),5);
+        }
         return $this->render('admin/order/index.html.twig', [
             'orders' =>$orders,
         ]);
     }
 
-    #[Route('/{slug}/show', name: 'app_order_show', methods: ['GET'])]
-    public function show(Order $order): Response
+    #[Route('/{slug}/show', name: 'app_order_show')]
+    public function show(Order $order,Request $request,OrderRepository $orderRepository): Response
     {
-        return $this->render('admin/order/show.html.twig', [
+        $form = $this->createForm(OrderType::class, $order);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $orderRepository->save($order, true);
+
+            return $this->redirectToRoute('app_order_show', ['slug' => $order->getSlug()]);
+        }
+
+        return $this->renderForm('admin/order/show.html.twig', [
             'order' => $order,
+            'form' => $form
         ]);
     }
 

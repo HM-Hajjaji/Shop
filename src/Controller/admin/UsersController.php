@@ -3,7 +3,9 @@
 namespace App\Controller\admin;
 
 use App\Repository\UserRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -11,15 +13,18 @@ use Symfony\Component\HttpFoundation\Response;
 class UsersController extends AbstractController
 {
     private $repository;
-    public function __construct(UserRepository $userRepository)
+    private $paginator;
+    public function __construct(UserRepository $userRepository,PaginatorInterface $paginator)
     {
         $this->repository = $userRepository;
+        $this->paginator = $paginator;
     }
 
     #[Route('/users',name: 'app_users')]
-    public function index():Response
+    public function index(Request $request):Response
     {
         $users = $this->repository->findAll();
+        $users = $this->paginator->paginate($users,$request->query->getInt('page',1),15);
         return $this->render('admin/users/index.html.twig',[
             'users' => $users]);
     }

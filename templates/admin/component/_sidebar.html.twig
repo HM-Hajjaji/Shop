@@ -90,13 +90,40 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ path('app_order_index') }}" class="nav-link">
+                <li class="nav-item ">
+                    <a href="" class="nav-link">
                         <i class="nav-icon fas fa-shopping-bag"></i>
                         <p>
                             Orders
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview pl-2">
+                        <li class="nav-item">
+                            <a href="{{ path('app_order_index') }}" class="nav-link">
+                                <i class="far fa-list-alt nav-icon"></i>
+                                <p>All</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('app_order_index',{'status' : 'processing'}) }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Processing</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('app_order_index',{'status' : 'shipped'}) }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Shipped</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('app_order_index',{'status' : 'delivered'}) }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Delivered</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="{{ path('app_users') }}" class="nav-link">

@@ -7,7 +7,8 @@
                 {% block content %}
                     <section class="content">
                         <!-- carousel -->
-                        <div id="carouselExampleIndicators" class="carousel slide my-2" data-ride="carousel">
+
+                        {# <div id="carouselExampleIndicators" class="carousel slide my-2" data-ride="carousel">
                             <ol class="carousel-indicators">
                                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                                 <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -37,8 +38,29 @@
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Next</span>
                             </a>
+                        </div>#}
+                        <div class="mt-2" style="background :  lightblue url({{ asset('uploads/logo/photo-1.png') }}) no-repeat  center;border-radius: 10px;height: 300px">
+                            <section class="content pb-4">
+                                <div class="container-fluid pb-2">
+                                    <h2 class="text-center display-4">Shop your way</h2>
+                                    <h4 class="text-center display-6">Choose the newest products and have the best experience</h4>
+                                    <div class="row ">
+                                        <div class="col-md-8 offset-md-2">
+                                            <form action="{{ path('app_search') }}">
+                                                <div class="input-group">
+                                                    <input type="search" name="search" class="form-control form-control-lg" placeholder="Search">
+                                                    <div class="input-group-append">
+                                                        <button type="submit" class="btn btn-lg btn-default">
+                                                            <i class="fa fa-search"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
-
                         <div class="text-center shadow my-2 p-3" style="background-color: #fff;border-radius: 10px">
                             <h2 class="font-weight-bolder">LATEST PRODUCTS</h2>
                             <h3 class="text-warning">Most selling product for the month</h3>

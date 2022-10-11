@@ -2,13 +2,101 @@
 
 {% block title %}Show Order{% endblock %}
 {% block content_header %}
+    {{ form_start(form) }}
     {% embed 'admin/component/_content_header_page.html.twig' %}
+        {% if order.status == 'processing' %}
+            {%set color = 'bg-info' %}
+        {% elseif order.status == 'shipped'%}
+            {%set color = 'bg-success' %}
+        {% else %}
+            {%set color = 'bg-danger' %}
+        {% endif %}
+
         {% block sub_title %}Order{% endblock %}
+
+        {% block action %}
+            {{ form_row(form.status,{'attr' : {'class' : color}}) }}
+            {{ form_row(form.submit ,{'attr' : {'class' : 'mx-2 btn btn-primary'}}) }}
+        {% endblock %}
     {% endembed %}
+    {{ form_end(form) }}
 {% endblock %}
 {% block content %}
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cart-arrow-down"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Order Created at</span>
+                    <span class="info-box-number">{{order.date|date('Y-m-d')}}<small> at </small>{{order.date|date('H:i:s')}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-user"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Name</span>
+                    <span class="info-box-number">{{ order.entityUser.name|title }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix hidden-md-up"></div>
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-envelope"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Email</span>
+                    <span class="info-box-number">{{ order.entityUser.email|title }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+                <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-phone"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Contact No</span>
+                    <span class="info-box-number">{{ order.entityUser.profile.phone ?? 'Phone Is Null' }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 my-2">
+            <ul class="list-group">
+                <li class="list-group-item active">Invoice Detail</li>
+                <li class="list-group-item">Total shipping :
+                    <span class="float-right badge bg-success">${{ order.total - order.delivery }} DH</span>
+                </li>
+                <li class="list-group-item">Delivery Speed :
+                    <span class="float-right badge bg-primary">${{order.delivery }} DH</span>
+                </li>
+                <li class="list-group-item">Payment Methods :
+                    <span class="float-right badge bg-info">{{ order.paymentMethods|title}}</span>
+                </li>
+                <li class="list-group-item"><strong>Total : </strong><span class="float-right badge bg-danger">${{ order.total}} DH</span></li>
+            </ul>
+        </div>
+        <div class="col-sm-6 my-2">
+            <ul class="list-group">
+                <li class="list-group-item active">Delivery Address</li>
+                <li class="list-group-item">User Id :
+                    <span class="float-right badge bg-success">{{ order.entityUser.slug|title }}</span>
+                </li>
+                <li class="list-group-item">Address :
+                    <span class="float-right badge bg-primary">{{order.entityUser.profile.address|title }}</span>
+                </li>
+                <li class="list-group-item">Delivery Speed :
+                    <span class="float-right badge bg-info">{{ order.deliverySpeed|title}}</span>
+                </li>
+                <li class="list-group-item">Phone : <span class="float-right badge bg-danger">{{ order.entityUser.profile.phone}}</span></li>
+            </ul>
+        </div>
+    </div>
     <section class="content shadow-lg">
-        <!-- Default box -->
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Products Of Order</h3>
@@ -17,9 +105,9 @@
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                         <i class="fas fa-minus"></i>
                     </button>
-                    {#<button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
                         <i class="fas fa-times"></i>
-                    </button>#}
+                    </button>
                 </div>
             </div>
             <div class="card-body p-0">
@@ -59,7 +147,7 @@
                                 {{ detail.getEntityProduct().name|title }}
                             </td>
                             <td>
-                                <img alt="{{ detail.getEntityProduct().name }}" class="table-avatar w-50" src="{{ asset('uploads'~detail.getEntityProduct().photo) }}">
+                                <img alt="{{ detail.getEntityProduct().name }}" class="table-avatar img-size-64" src="{{ asset('uploads'~detail.getEntityProduct().photo) }}">
                             </td>
                             <td>
                                 {{ detail.getEntityProduct().description|title }}
@@ -80,9 +168,6 @@
             </div>
             <div class="card-footer">
             </div>
-            <!-- /.card-body -->
         </div>
-        <!-- /.card -->
-
     </section>
 {% endblock %}
