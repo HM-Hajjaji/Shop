@@ -8,5 +8,202 @@
     {% endembed %}
 {% endblock %}
 {% block content %}
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-dollar-sign"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Total money spent</span>
+                    {% set money = 0  %}
+                    {% set prod = 0 %}
+                    {% for item in user.orders %}
+                        {% set money = money + item.total  %}
+                        {% set prod = item.listProducts.count %}
+                    {% endfor %}
+                    <span class="info-box-number">{{ "$ "~money }}</span>
+                </div>
+            </div>
+        </div>
 
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-shopping-cart"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Number of orders</span>
+                    <span class="info-box-number font-weight-bold">{{ user.orders|length }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix hidden-md-up"></div>
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+                <span class="info-box-icon bg-success elevation-1"><i class="far fa-heart"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Mentions</span>
+                    <span class="info-box-number">{{ user.wishlist|length }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+                <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-shopping-basket"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Number of products</span>
+                    <span class="info-box-number">{{prod }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Profile Image -->
+            <div class="card card-primary card-outline">
+                <div class="card-body box-profile">
+                    {% if user.profile %}
+                        {% if user.profile.photo %}
+                            <div class="text-center">
+                                <img class="profile-user-img img-fluid img-circle"
+                                     src="{{ asset('uploads'~ user.profile.photo) }}"
+                                     alt="User profile picture">
+                            </div>
+                        {% else %}
+                            <div class="text-center">
+                                <img class="profile-user-img img-fluid img-circle"
+                                     src="{{ asset('uploads/logo/user.jpg') }}"
+                                     alt="User profile picture">
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle"
+                                 src="{{ asset('uploads/logo/user.jpg') }}"
+                                 alt="User profile picture">
+                        </div>
+                    {% endif %}
+                    <h3 class="profile-username text-center">{{ user.name|title }}</h3>
+                    <p class="text-dark text-center"><span class="info-box-number">{{user.date|date('Y-m-d')}}<small> at </small>{{user.date|date('H:i:s')}}</span></p>
+                    <ul class="list-group">
+                        <li class="list-group-item"><i class="fa fa-id-badge"></i> <span>{{ "#"~user.slug }}</span></li>
+                        <li class="list-group-item"><i class="fa fa-phone-square"></i> <span>{{user.profile.phone }}</span></li>
+                        <li class="list-group-item"><i class="fa fa-envelope"></i> <span>{{ user.email|title }}</span></li>
+                        <li class="list-group-item"><i class="fa fa-crown"></i> {%for role in user.roles %}<span class="badge badge-danger ml-1">{{ role }}</span>{% endfor %}</li>
+                    </ul>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+
+        <div class="col-md-9">
+            <section class="content shadow-lg">
+                <!-- Default box -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Orders</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            {# <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                                                                <i class="fas fa-times"></i>
+                                                        </button> #}
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-striped projects">
+                            <thead>
+                            <tr>
+                                <th style="width: 1%">
+                                    #
+                                </th>
+                                <th style="width: 29%">
+                                    Date
+                                </th>
+                                <th style="width: 30%">
+                                    Products Photos
+                                </th>
+                                <th style="width: 10%" class="text-center">
+                                    Total
+                                </th>
+                                <th style="width: 10%" class="text-center">
+                                    Delivery Speed
+                                </th>
+                                <th style="width: 10%" class="text-center">
+                                    Status
+                                </th>
+                                <th style="width: 10%" class="text-center">
+                                    Count Products
+                                </th>
+                                <th style="width: 10%">
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in user.orders %}
+                                <tr>
+                                    <td>
+                                        #
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-danger">{{ order.date|date('Y-m-d') }}</span>
+                                    </td>
+                                    <td>
+                                        {%for detail in order.getListProducts() %}
+                                            <img alt="{{ detail.getEntityProduct().name }}" class="table-avatar img-size-64"
+                                                 src="{{ asset('uploads'~detail.getEntityProduct().photo) }}">
+                                        {% endfor %}
+
+                                    </td>
+                                    <td class="project-state">
+                                        <span class="badge badge-warning">{{ order.total }} DH</span>
+                                    </td>
+                                    <td class="project-state">
+                                        <span class="badge badge-dark">{{ order.deliverySpeed|title }}</span>
+                                    </td>
+                                    <td class="project-state">
+                                        <span class="badge badge-success">{{ order.status|title }}</span>
+                                    </td>
+                                    <td class="project-state">
+                                        <span class="badge badge-info">{{ order.getListProducts()|length}}</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="dropdown">
+                                            <a class="nav-link" data-toggle="dropdown" href="#">
+                                                <i class="fa fa-chevron-circle-down"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                                <div class="dropdown-divider"></div>
+                                                <a href="{{ path('app_order_show', {'slug': order.slug}) }}" class="dropdown-item bg-primary">
+                                                    <i class="fas fa-folder">
+                                                    </i>
+                                                    View
+                                                </a>
+                                                {#<div class="dropdown-divider"></div>
+                                        {{ include('admin/product/_delete_form.html.twig',{'slug':order.slug}) }}#}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="8">no records found</td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        {#  {{ knp_pagination_render(orders) }}#}
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+            </section>
+        </div>
+    </div>
 {% endblock %}

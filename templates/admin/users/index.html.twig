@@ -46,7 +46,7 @@
                            Phone
                         </th>
                         <th style="width: 10%" class="text-center">
-                            Number Orders
+                            Orders
                         </th>
                         <th style="width: 5%" class="text-center">
                             Date
@@ -56,62 +56,70 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {% set continue = false %}
                     {% for user in users %}
-                        <tr>
-                            <td>
-                                #
-                            </td>
-                            <td>
-                                {{ user.name|title }}
-                            </td>
-                            <td>
-                                {{ user.email|title }}
-                            </td>
-                           {% if user.profile %}
-                               {% if user.profile.photo %}
-                                   <td>
-                                       <img alt="{{ user.name }}" class="table-avatar img-size-64" src="{{ asset('uploads'~user.profile.photo) }}">
-                                   </td>
-                               {% else %}
-                                   <td>
-                                       <img alt="{{ user.name }}" class="table-avatar img-size-64" src="{{ asset('uploads/logo/user.jpg') }}">
-                                   </td>
-                               {% endif %}
-                               <td>
-                                   {{ user.profile.address|title }}
-                               </td>
-                               <td class="project-state">
-                                   <span class="badge badge-warning">{{  user.profile.phone }}</span>
-                               </td>
-                           {% else %}
-                               <td>
-                                   <img alt="{{ user.name }}" class="table-avatar img-size-64" src="{{ asset('uploads/logo/user.jpg') }}">
-                               </td>
-                               <td>
-                                   {{ '-' }}
-                               </td>
-                               <td class="project-state">
-                                   <span class="badge badge-warning">{{ '-' }}</span>
-                               </td>
-                           {% endif %}
-                            <td class="project-state">
-                                <span class="badge badge-success">{{  user.orders|length }}</span>
-                            </td>
-                            <td class="project-state">
-                                <span class="badge badge-danger">{{  user.date }}</span>
-                            </td>
-                            <td>
-                                <div class="btn-group mr-2" role="group" aria-label="First group">
-                                    <button type="button" class="btn btn-outline-primary"><i class="fa fa-eye"></i></button>
-                                </div>
-                            </td>
-                        </tr>
+                        {% if user.slug == app.user.slug %}
+                            {% set continue = true %}
+                        {% endif %}
+                        {% if not continue %}
+                            <tr>
+                                <td>
+                                    #
+                                </td>
+                                <td>
+                                    {{ user.name|title }}
+                                </td>
+                                <td>
+                                    {{ user.email|title }}
+                                </td>
+                                {% if user.profile %}
+                                    {% if user.profile.photo %}
+                                        <td>
+                                            <img alt="{{ user.name }}" class="table-avatar img-size-64" src="{{ asset('uploads'~user.profile.photo) }}">
+                                        </td>
+                                    {% else %}
+                                        <td>
+                                            <img alt="{{ user.name }}" class="table-avatar img-size-64" src="{{ asset('uploads/logo/user.jpg') }}">
+                                        </td>
+                                    {% endif %}
+                                    <td>
+                                        {{ user.profile.address|title }}
+                                    </td>
+                                    <td class="project-state">
+                                        <span class="badge badge-warning">{{  user.profile.phone }}</span>
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        <img alt="{{ user.name }}" class="table-avatar img-size-64" src="{{ asset('uploads/logo/user.jpg') }}">
+                                    </td>
+                                    <td>
+                                        {{ '-' }}
+                                    </td>
+                                    <td class="project-state">
+                                        <span class="badge badge-warning">{{ '-' }}</span>
+                                    </td>
+                                {% endif %}
+                                <td class="project-state">
+                                    <span class="badge badge-success">{{  user.orders|length }}</span>
+                                </td>
+                                <td class="project-state">
+                                    <span class="badge badge-danger">{{  user.date|date('Y-m-d') }}</span>
+                                </td>
+                                <td>
+                                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                                        <a href="{{ path('app_admin_show_user',{'slug' : user.slug}) }}" type="button" class="btn btn-outline-primary"><i class="fa fa-eye"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if continue %}
+                            {% set continue = false %}
+                        {% endif %}
                     {% else %}
                         <tr>
                             <td colspan="8">no records found</td>
                         </tr>
                     {% endfor %}
-
                     </tbody>
                 </table>
             </div>

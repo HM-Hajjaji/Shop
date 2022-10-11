@@ -2,6 +2,7 @@
 
 namespace App\Controller\admin;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,6 +28,14 @@ class UsersController extends AbstractController
         $users = $this->paginator->paginate($users,$request->query->getInt('page',1),15);
         return $this->render('admin/users/index.html.twig',[
             'users' => $users]);
+    }
+
+    #[Route('/user/{slug}',name: 'app_admin_show_user')]
+    public function show(User $user)
+    {
+        return $this->render('admin/users/show.html.twig',[
+            'user' => $user
+        ]);
     }
 
 }

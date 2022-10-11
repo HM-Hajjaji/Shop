@@ -86,20 +86,8 @@
                                 <span class="badge badge-info">{{ order.getListProducts()|length}}</span>
                             </td>
                             <td class="text-center">
-                                <div class="dropdown">
-                                    <a class="nav-link" data-toggle="dropdown" href="#">
-                                        <i class="fa fa-chevron-circle-down"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                                        <div class="dropdown-divider"></div>
-                                        <a href="{{ path('app_order_show', {'slug': order.slug}) }}" class="dropdown-item bg-primary">
-                                            <i class="fas fa-folder">
-                                            </i>
-                                            View
-                                        </a>
-                                        {#<div class="dropdown-divider"></div>
-                                        {{ include('admin/product/_delete_form.html.twig',{'slug':order.slug}) }}#}
-                                    </div>
+                                <div class="btn-group mr-2" role="group" aria-label="First group">
+                                    <a href="{{ path('app_order_show', {'slug': order.slug}) }}" type="button" class="btn btn-outline-primary"><i class="fa fa-eye"></i></a>
                                 </div>
                             </td>
                         </tr>
