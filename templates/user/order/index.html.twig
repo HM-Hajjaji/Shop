@@ -94,8 +94,16 @@
                                             </i>
                                             View
                                         </a>
-                                        {#<div class="dropdown-divider"></div>
-                                        {{ include('admin/product/_delete_form.html.twig',{'slug':order.slug}) }}#}
+                                        {%if order.status == 'processing'%}
+                                            <div class="dropdown-divider"></div>
+                                            <a href="{{ path('app_user_order_edit', {'slug': order.slug}) }}" class="dropdown-item bg-info">
+                                                <i class="fas fa-edit">
+                                                </i>
+                                                Edit
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            {{ include('user/order/_delete_form.html.twig',{'slug': order.slug}) }}
+                                        {% endif %}
                                     </div>
                                 </div>
                             </td>

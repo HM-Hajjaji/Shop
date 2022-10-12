@@ -39,17 +39,17 @@ class OrderRepository extends ServiceEntityRepository
         }
     }
 
-   /* public function sumTotal():array
-    {
-        $entityManager = $this->getEntityManager();
-        $query = $entityManager->createQuery(
-            "SELECT SUM(o.total)
-            FROM App\Entity\Order o
-            GROUP BY date_format(o.date,'%d/%m/%Y')"
-        );
+    /* public function sumTotal():array
+     {
+         $entityManager = $this->getEntityManager();
+         $query = $entityManager->createQuery(
+             "SELECT SUM(o.total)
+             FROM App\Entity\Order o
+             GROUP BY date_format(o.date,'%d/%m/%Y')"
+         );
 
-        return $query->getResult();
-    }*/
+         return $query->getResult();
+     }*/
 //    /**
 //     * @return Order[] Returns an array of Order object
 //     */

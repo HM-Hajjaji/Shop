@@ -1,0 +1,98 @@
+{% extends 'home/shop.html.twig' %}
+
+{% block title %}Order{% endblock %}
+ {% block sub_title %}Edit Order{% endblock %}
+{% block content %}
+    <section class="content shadow-lg">
+        <!-- Default box -->
+        <form action="{{ path('app_user_order_store',{'slug' : order.slug}) }}">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">My Products</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped projects">
+                    <thead>
+                    <tr>
+                        <th style="width: 1%">
+                            #
+                        </th>
+                        <th style="width: 19%">
+                            Product Name
+                        </th>
+                        <th style="width: 20%">
+                            Product Photo
+                        </th>
+                        <th style="width: 5%" class="text-center">
+                            Price
+                        </th>
+                        <th style="width: 10%" class="text-center">
+                            Date
+                        </th>
+                        <th style="width: 5%" class="text-center">
+                            Quantity
+                        </th>
+                        <th style="width: 10%">
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order.listProducts %}
+                            <tr>
+                                <td>
+                                    #
+                                </td>
+                                <td>
+                                    {{ item.entityProduct.name|title }}
+                                </td>
+                                <td>
+                                    <img alt="{{ item.entityProduct.name }}" class="table-avatar img-size-64"
+                                         src="{{ asset('uploads'~item.entityProduct.photo) }}">
+                                </td>
+                                <td class="project-state">
+                                    <span class="badge badge-warning">{{ item.price }} DH</span>
+                                </td>
+                                <td class="project-state">
+                                    <span class="badge badge-success">{{ item.date|date('Y-m-d H:i:s') }}</span>
+                                </td>
+                                <td class="project-state">
+                                    <input type='number' name="{{ item.entityProduct.slug }}" min="1" max="{{ item.entityProduct.quantity }}" class="form-control" value="{{item.quantity}}">
+                                </td>
+                                <td class="text-center">
+                                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                                        <a href="{{ path('app_order_delete_product',{'slug' : order.slug,'id' : item.id}) }}" type="button" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="8">no records found</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer row justify-content-around">
+                <!-- Button trigger modal -->
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-save"></i> Save
+                </button>
+                <div class="col-6 text-right">
+                    <h3 class="text-black-50">{{ order.total }}<i class="fa fa-money-bill"></i></h3>
+                </div>
+
+            </div>
+            <!-- /.card-body -->
+        </div>
+        </form>
+        <!-- /.card -->
+
+    </section>
+{% endblock %}

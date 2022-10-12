@@ -57,32 +57,4 @@ class OrderController extends AbstractController
             'form' => $form
         ]);
     }
-
-    /*#[Route('/{id}/edit', name: 'app_order_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Order $order, OrderRepository $orderRepository): Response
-    {
-        $form = $this->createForm(OrderType::class, $order);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $orderRepository->save($order, true);
-
-            return $this->redirectToRoute('app_order_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('order/edit.html.twig', [
-            'order' => $order,
-            'form' => $form,
-        ]);
-    }*/
-
-    #[Route('/{slug}', name: 'app_order_delete', methods: ['POST'])]
-    public function delete(Request $request, Order $order, OrderRepository $orderRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$order->getId(), $request->request->get('_token'))) {
-            $orderRepository->remove($order, true);
-        }
-
-        return $this->redirectToRoute('app_order_index', [], Response::HTTP_SEE_OTHER);
-    }
 }
