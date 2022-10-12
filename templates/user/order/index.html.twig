@@ -49,12 +49,19 @@
                     </thead>
                     <tbody>
                     {% for order in orders %}
+                        {% if order.status == 'processing' %}
+                            {%set color = 'info' %}
+                        {% elseif order.status == 'shipped'%}
+                            {%set color = 'success' %}
+                        {% else %}
+                            {%set color = 'danger' %}
+                        {% endif %}
                         <tr>
                             <td>
                                 #
                             </td>
                             <td>
-                                <span class="badge badge-danger">{{ order.date|date('Y-m-d') }}</span>
+                                <span class="badge bg-gradient-indigo">{{ order.date|date('Y-m-d') }}</span>
                             </td>
                             <td>
                                 {%for detail in order.getListProducts() %}
@@ -70,10 +77,10 @@
                                 <span class="badge badge-dark">{{ order.deliverySpeed|title }}</span>
                             </td>
                             <td class="project-state">
-                                <span class="badge badge-success">{{ order.status|title }}</span>
+                                <span class="badge badge-{{ color }}">{{ order.status|title }}</span>
                             </td>
                             <td class="project-state">
-                                <span class="badge badge-info">{{ order.getListProducts()|length}}</span>
+                                <span class="badge bg-gradient-gray">{{ order.getListProducts()|length}}</span>
                             </td>
                             <td class="text-center">
                                 <div class="dropdown">

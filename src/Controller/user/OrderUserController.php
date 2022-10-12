@@ -13,6 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+
 #[Route('/user')]
 class OrderUserController extends AbstractController
 {
@@ -56,14 +58,14 @@ class OrderUserController extends AbstractController
     }
 
     #[Route('/new/{total}/{speed}/{payment}', name: 'app_user_order_new')]
-    public function new($total,$speed,$payment,Request $request,OrderRepository $orderRepository,DetailRepository $detailRepository,ProductRepository $productRepository): Response
+    public function new($total,$speed,$payment,Request $request,SluggerInterface $slugger,OrderRepository $orderRepository,DetailRepository $detailRepository,ProductRepository $productRepository): Response
     {
         $session = $request->getSession();
         $cart = $session->get('cart');
         $order = new Order();
-        $order->setSlug($this->getUser()->getName().' '.uniqid().' order shop');
+        $order->setSlug($slugger->slug($this->getUser()->getName().' '.uniqid().' order shop'));
         $order->setDate(new \DateTime());
-        $order->setStatus("on the way");
+        $order->setStatus("processing");
         $order->setDelivery($speed);
         $order->setPaymentMethods($payment);
         if ($order->getDelivery() == 1.75)
