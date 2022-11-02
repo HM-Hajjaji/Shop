@@ -1,6 +1,6 @@
 <section class="content shadow-lg">
     <!-- Default box -->
-    <div class="card">
+    <div class="card" {{ stimulus_controller('symfony/ux-swup/swup') }} id="swup" >
         <div class="card-header">
             <h3 class="card-title">Products</h3>
 
@@ -99,7 +99,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="card-footer">
+        <div class="card-footer" >
             {{ knp_pagination_render(products) }}
         </div>
         <!-- /.card-body -->

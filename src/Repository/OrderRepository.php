@@ -43,25 +43,25 @@ class OrderRepository extends ServiceEntityRepository
      {
          $entityManager = $this->getEntityManager();
          $query = $entityManager->createQuery(
-             "SELECT SUM(o.total)
+             "SELECT SUM(o.total) as total,o.date
              FROM App\Entity\Order o
              GROUP BY date_format(o.date,'%d/%m/%Y')"
          );
 
          return $query->getResult();
      }*/
-//    /**
-//     * @return Order[] Returns an array of Order object
-//     */
-//    public function sumTotal(): array
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->select('sum(o.total)')
-//            ->groupBy("date_format(o.date,'%d-%M-%Y')")
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Order[] Returns an array of Order object
+     */
+    public function sumTotal(): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select('sum(o.total) as total,o.date as date')
+            ->groupBy("o.date")
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 
 //    public function findOneBySomeField($value): ?Order

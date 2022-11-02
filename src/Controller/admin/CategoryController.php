@@ -52,6 +52,7 @@ class CategoryController extends AbstractController
             $category->setDate(new \DateTime());
             $category->setSlug($slugger->slug($category->getName()." ".uniqid().' title','-'));
             $this->repository->save($category, true);
+
             return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
         }
 

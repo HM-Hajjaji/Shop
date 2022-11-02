@@ -22,7 +22,13 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name',TextType::class)
+            ->add('name',TextType::class,[
+                'autocomplete' => true,
+                'tom_select_options' => [
+                    'create' => true,
+                    'createOnBlur' => true,
+                    'delimiter' => ',']
+            ])
             ->add('description',TextareaType::class)
             ->add('price',MoneyType::class)
             ->add('discount',IntegerType::class,['required' => false,  'attr' => ['min' => 0,'max' => 100]])
@@ -43,6 +49,7 @@ class ProductType extends AbstractType
             ->add('category',EntityType::class,[
                 'class' => Category::class,
                 'choice_label' => 'name',
+                'autocomplete' => true,
                 ])
             ->add('submit',SubmitType::class,['label' => $options['btn_name']]);
     }

@@ -24,33 +24,53 @@ class AdminController extends AbstractController
     #[Route('/dashboard', name: 'app_dashboard')]
     public function index(ChartBuilderInterface $chartBuilder,OrderRepository $orderRepository,CategoryRepository $categoryRepository,UserRepository $userRepository,ProductRepository $productRepository): Response
     {
-        $order = $orderRepository->findBy([],['date' => 'ASC']);
-        $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $order = $orderRepository->sumTotal();
+        $chart = $chartBuilder->createChart(Chart::TYPE_POLAR_AREA);
         $labels = [];
         $datasets = [];
         foreach ($order as $item)
         {
-            $labels[] = $item->getDate()->format('y-m-d');
-            $datasets[] = $item->getTotal();
+            $labels[] = $item['date']->format('y-m-d');
+            $datasets[] = $item['total'];
         }
         $chart->setData([
             'labels' => $labels,
             'datasets' => [
                 [
-                    'label' => 'My First dataset',
-                    'backgroundColor' => 'rgb(255, 99, 132)',
-                    'borderColor' => 'rgb(255, 99, 132)',
+                    'label' => 'Total Of Day',
+                    'backgroundColor' => ['rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'],
+                    'borderColor' => ['rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'],
+                    'borderWidth' => 1,
                     'data' => $datasets,
                 ],
             ],
         ]);
         $chart->setOptions([
-            /*'scales' => [
+            'animations' => [
+                'tension' => [
+                    'loop' => true,
+                    'easing' => 'linear',
+                    'from' => 1,
+                    'to' => 0,
+                    'loop' => true
+                ]
+            ],
+            /*'scales' =>[
                 'y' => [
-                    'suggestedMin' => 0,
-                    'suggestedMax' => 100,
-                ],
-            ],*/
+                    'min' => 0,
+                    'max' => 100
+                ]
+            ]*/
         ]);
         return $this->render('admin/index.html.twig',[
             'orders' => $order,

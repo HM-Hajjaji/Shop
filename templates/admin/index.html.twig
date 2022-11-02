@@ -56,7 +56,6 @@
                         </div>
                         <!-- ./col -->
                         <div class="col-lg-3 col-6">
-                            <!-- small box -->
                             <div class="small-box bg-danger">
                                 <div class="inner">
                                     <h3>{{ categorise|length }}</h3>
@@ -70,10 +69,11 @@
                                 <a href="{{ path('app_category_index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
-                        <!-- ./col -->
                     </div>
-                    <div class="my-2">
-                        {{ render_chart(chart) }}
+                    <div class="row">
+                        <div class="col-6">
+                            {{ render_chart(chart) }}
+                        </div>
                     </div>
                 {% endblock %}
             </div><!-- /.container-fluid -->

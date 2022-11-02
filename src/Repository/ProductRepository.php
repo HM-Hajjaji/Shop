@@ -62,7 +62,6 @@ class ProductRepository extends ServiceEntityRepository
             ->orWhere('p.name like :val')
             ->setParameter('val',  '%'.$value.'%')
             ->orderBy('p.date', 'DESC')
-//            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;

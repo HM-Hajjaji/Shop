@@ -1,9 +1,11 @@
-{% embed 'component/_modal.html.twig' %}
-    {%block modal_id %}categoryNew{% endblock %}
-    {%block modal_bg %}bg-primary{% endblock %}
-    {%block modal_title %}New Category{% endblock %}
-    {%block modal_body %}
-        {{ include('admin/category/_form.html.twig') }}
-    {% endblock %}
-{% endembed %}
+<turbo-frame id="new_category">
+    {% embed 'component/_modal.html.twig' %}
+        {%block modal_id %}categoryNew{% endblock %}
+        {%block modal_bg %}bg-primary{% endblock %}
+        {%block modal_title %}New Category{% endblock %}
+        {%block modal_body %}
+            {{ include('admin/category/_form.html.twig') }}
+        {% endblock %}
+    {% endembed %}
+</turbo-frame>
 <!-- Modal -->

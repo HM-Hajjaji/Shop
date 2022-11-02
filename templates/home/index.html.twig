@@ -96,8 +96,8 @@
                                                     <a href="{{ path('app_user_add_wishlist',{'slug' : product.slug}) }}" class="btn btn-outline-dark col-5" title="Add to Wishlist"><i class="fa fa-heart" style="color: red;"></i></a>
                                                 {% endif %}
                                             {% else %}
-                                                <a href="{{ path('app_product_user_show',{'slug' : product.slug}) }}" class="btn bg-cyan col-5" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
-                                                <a href="{{ path('app_user_add_wishlist',{'slug' : product.slug}) }}" class="btn btn-outline-dark col-5" title="Add to Wishlist"><i class="fa fa-heart" style="color: red;"></i></a>
+                                                <a href="{{ path('app_product_user_show',{'slug' : product.slug}) }}" data-turbo-action="replace" class="btn bg-cyan col-5" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
+                                                <a href="{{ path('app_user_add_wishlist',{'slug' : product.slug}) }}"  class="btn btn-outline-dark col-5" title="Add to Wishlist"><i class="fa fa-heart" style="color: red;"></i></a>
                                             {% endif %}
                                         </dic>
                                         {% set datePost = product.date|date('d-m-Y') %}
