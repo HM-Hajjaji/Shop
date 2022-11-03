@@ -16,6 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\UX\Dropzone\Form\DropzoneType;
 
 class ProductType extends AbstractType
 {
@@ -35,16 +36,24 @@ class ProductType extends AbstractType
             ->add('quantity',IntegerType::class,[
                 'attr' => ['min' => 0]
             ])
-            ->add('photo',FileType::class,[
+//            ->add('photo',FileType::class,[
+//                'mapped' => false,
+//                'attr'  => ['accept' => 'image/*'],
+//                'required' => $options['photo_require']
+//                /*'constraints' => [
+//                    new File([
+//                        'maxSize' => '2024k',
+//                        'mimeTypesMessage' => 'Please upload a valid Photo',
+//                    ])
+//                ],*/
+//            ])
+            ->add('photo', DropzoneType::class, [
+                'attr' => [
+                    'placeholder' => 'Drag and drop a file or click to browse',
+                    'accept' => 'image/*'
+                ],
                 'mapped' => false,
-                'attr'  => ['accept' => 'image/*'],
                 'required' => $options['photo_require']
-                /*'constraints' => [
-                    new File([
-                        'maxSize' => '2024k',
-                        'mimeTypesMessage' => 'Please upload a valid Photo',
-                    ])
-                ],*/
             ])
             ->add('category',EntityType::class,[
                 'class' => Category::class,
