@@ -27,7 +27,7 @@ class AppFixtures extends Fixture
             $category->setName('category '.$i);
             $category->setDate(new \DateTime());
             $category->setSlug($this->slugger->slug($category->getName().' '.uniqid()));
-            $category->setDescription('A card is a flexible and extensible content container. It includes options for headers and footers, a wide variety of content, contextual background colors, and powerful display options. If you’re familiar with Bootstrap 3, cards replace our old panels, wells, and thumbnails. Similar functionality to those components is available as modifier classes for cards. '.uniqid());
+            $category->setDescription('A card is a flexible and extensible content container. It includes options for headers and footers, a wide variety of content, contextual background colors, and powerful display options. If you’re familiar with Bootstrap 3, cards replace our old panels, wells, and thumbnails. Similar functionality to those comp is available as modifier classes for cards. '.uniqid());
             for ($j = 0;$j < 20;$j++)
             {
                 $product = new Product();

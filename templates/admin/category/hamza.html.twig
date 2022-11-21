@@ -1,0 +1,32 @@
+<turbo-stream action="before" target="hamza">
+    <template>
+        <tr>
+            {{ render(path('app_category_edit',{'slug' : category.slug})) }}
+            <td>#</td>
+            <td>{{ category.name|title }}</td>
+            <td>{{ category.description|title }}</td>
+            <td class="text-center">
+                <div class="dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="fa fa-chevron-circle-down"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <div class="dropdown-divider"></div>
+                        <a href="{{ path('app_category_show', {'slug': category.slug}) }}" class="dropdown-item bg-primary">
+                            <i class="fas fa-folder">
+                            </i>
+                            View
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <div type="button" class="dropdown-item bg-info" data-toggle="modal" data-target="{{'#'~category.slug}}">
+                            <i class="fas fa-edit"></i>
+                            Edit
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        {{ include('admin/category/_delete_form.html.twig',{'slug':category.slug}) }}
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </template>
+</turbo-stream>

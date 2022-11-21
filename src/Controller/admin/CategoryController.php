@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\UX\Turbo\TurboBundle;
 
 #[Route('admin/category')]
 class CategoryController extends AbstractController
@@ -27,7 +28,7 @@ class CategoryController extends AbstractController
     #[Route('/', name: 'app_category_index', methods: ['GET'])]
     public function index(Request $request): Response
     {
-        $categories = $this->repository->findAll();
+        $categories = $this->repository->findBy([],['id' => 'DESC']);
         $categories = $this->paginator->paginate($categories,$request->query->getInt('page',1),5);
         return $this->render('admin/category/index.html.twig', [
             'categories' => $categories,
@@ -45,14 +46,20 @@ class CategoryController extends AbstractController
     #[Route('/new', name: 'app_category_new', methods: ['GET', 'POST'])]
     public function new(SluggerInterface $slugger,Request $request): Response
     {
+
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category,['btn_name' => "Create",'action' => $this->generateUrl('app_category_new'),]);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $category->setDate(new \DateTime());
             $category->setSlug($slugger->slug($category->getName()." ".uniqid().' title','-'));
             $this->repository->save($category, true);
 
+            /*if (TurboBundle::STREAM_FORMAT === $request->getPreferredFormat()) {
+                $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+                return $this->render('admin/category/hamza.html.twig',['category' => $category],new Response('',200,['Content-type' => "text/vnd.turbo-stream.html"]));
+            }*/
             return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
         }
 

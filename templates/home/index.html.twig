@@ -6,8 +6,20 @@
             <div class="container-fluid">
                 {% block content %}
                     <section class="content">
-                        <!-- carousel -->
+                        <a href="{{ path('app_test') }}">Click</a>
+                        <div id="hamza">
 
+                        </div>
+                        <!-- carousel -->
+{#                        {{ component('alert',{class : 'form-control'}) }}#}
+                      {#  {% component alert %}
+                            {% block header %}
+                                header
+                            {% endblock %}
+                            {% block content %}
+                                hello
+                            {% endblock %}
+                        {% endcomponent %}#}
                         {# <div id="carouselExampleIndicators" class="carousel slide my-2" data-ride="carousel">
                             <ol class="carousel-indicators">
                                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
