@@ -4,8 +4,9 @@
     {% embed 'admin/component/_content_header_page.html.twig' %}
         {% block sub_title %}Categories{% endblock %}
         {% block action %}
-            <turbo-frame id = "new_category" src = "{{ path('app_category_new') }}">
-            </turbo-frame>
+            {#<turbo-frame id = "new_category" src = "{{ path('app_category_new') }}">
+            </turbo-frame>#}
+            {{ render(path('app_category_new')) }}
             <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#categoryNew">
                 <i class="fa fa-plus mr-1"></i> New
             </button>
@@ -27,7 +28,7 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="hamza">
         {% for category in categories %}
             <tr>
                 {{ render(path('app_category_edit',{'slug' : category.slug})) }}

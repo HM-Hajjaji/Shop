@@ -12,6 +12,8 @@
 ###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache
+symfony.lock
+composer.lock
 ###< phpunit/phpunit ###
 
 ###> symfony/phpunit-bridge ###
@@ -25,3 +27,4 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+

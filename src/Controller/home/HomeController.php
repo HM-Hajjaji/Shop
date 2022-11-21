@@ -22,6 +22,11 @@ class HomeController extends AbstractController
             'products' =>$products,
         ]);
     }
+    #[Route('/test', name: 'app_test')]
+    public function test(): Response
+    {
+        return $this->render('admin/category/hamza.html.twig',[],new Response('',200,['Content-type' =>"text/vnd.turbo-stream.html"]));
+    }
     #[Route('/shop', name: 'app_shop')]
     public function shop(CategoryRepository $categoryRepository, ProductRepository $productRepository ,Request $request,PaginatorInterface $paginator): Response
     {

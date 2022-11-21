@@ -31,6 +31,9 @@ const swiper = new Swiper('.swiper', {
     },
 });
 
+let btn = document.getElementsByName('category[submit]');
+console.log(btn);
+
 
 
 // start the Stimulus application
